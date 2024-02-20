@@ -38,3 +38,7 @@ Our objective is to create a website having the ability to help people who want 
 ## 🛜 setup instructions:
 
 - Access the website from a web browser (All modern browsers should be able to support react website expect Internet Exploere 11 or before, polyfills needed).
+
+## AI Declaration forms
+
+[TingHin Cheung](./AIDeclarationForms/p1_AI_declaration_TingHin_Cheung_100396747.pdf)
