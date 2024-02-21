@@ -41,4 +41,8 @@ Our objective is to create a website having the ability to help people who want 
 
 [TingHin Cheung](./AIDeclarationForms/p1_AI_declaration_TingHin_Cheung_100396747.pdf)
 [Yujie Peng](./AIDeclarationForms/p1_AI_Declaration_Yujie_Peng_100407970.pdf)
+<<<<<<< HEAD
 [Ravinesh Sami](./AIDeclarationForms/p1_AI_Declaration_Ravinesh_Sami_100399749.pdf)
+=======
+[Xavier Pardanaud](AIDeclarationForms/P1_AI_Declaration_Xavier_Pardanaud_100309633.pdf)
+>>>>>>> 64653eea7fdb654e06a01646c6f9e27e4eb2e86a
