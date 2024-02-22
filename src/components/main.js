@@ -5,6 +5,8 @@ import axios from 'axios';
 // import the components in the above section
 
 // main display goes here.
+
+
 // add in the components and conditionally rendering the content to user
 function Main () {
   // states declarations to store data between rendering
@@ -25,9 +27,14 @@ function Main () {
     });
   }
 return (
-  {
+
+  <div>
+    <input val ={word}/>
+    <button>click here</button>
+  </div>
+  
     // <DefinitionList definition={fetchData} />
-  }
+  
 )
 }
 

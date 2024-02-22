@@ -1,4 +1,5 @@
 import './App.css';
+import Main from './components/main';
 
 // import the components in the above section
 function App() {
@@ -6,6 +7,7 @@ function App() {
   return (
     <div className="App">
       <p>Please add stuff here.</p>
+      <Main />
     </div>
   );
 }
