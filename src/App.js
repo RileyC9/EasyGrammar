@@ -1,23 +1,16 @@
-import './App.css';
+import "./App.css";
+import Contact from "./ui/Contact";
+import Footer from "./ui/Footer";
+import Header from "./ui/Header";
+import WordInput from "./ui/WordInput";
 
 function App() {
-  
   return (
     <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-      </header>
+      <Header />
+      <WordInput />
+      <Contact />
+      <Footer />
     </div>
   );
 }
