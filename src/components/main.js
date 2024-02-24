@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import DefinitionList from 'DefinitionList';
+import DefinitionList from "./DefinitionList";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Contact from "./Contact.js";
@@ -56,11 +56,10 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
-      <Intro />
+      <DefinitionList definition={fetchData} />
       <Contact />
       <Footer />
     </>
-    // <DefinitionList definition={fetchData} />
   );
 }
 
