@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import DefinitionList from './DefinitionList';
+import DefinitionList from "./DefinitionList";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Contact from "./Contact.js";
@@ -30,7 +30,6 @@ function Main() {
       .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
       .then((res) => {
         setFetchData(res.data);
-        
       })
       .catch((error) => {
         console.error(
@@ -55,11 +54,10 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
-      <DefinitionList definition={fetchData}/>
+      <DefinitionList definition={fetchData} />
       <Contact />
       <Footer />
     </>
-    
   );
 }
 
