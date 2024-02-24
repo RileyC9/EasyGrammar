@@ -5,11 +5,14 @@ export default function Footer() {
     { href: "#", label: "About" },
   ];
   return (
-    <footer className="items-center">
-      <div>{/* for social media */}</div>
+    <footer className="items-center bg-gray-100 py-2 mt-12">
+      <div className="">
+        {/* for social media */}
+        <h2 className="text-2xl font-bold text-gradient mt-6">Easy Grammar</h2>
+      </div>
       <div className="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
         <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+          <span className="text-sm text-gray-500 dark:text-gray-400">
             © 2024{" "}
             <a href="/" className="hover:underline">
               Easy Grammar

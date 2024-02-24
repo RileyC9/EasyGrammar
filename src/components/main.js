@@ -5,6 +5,7 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Contact from "./Contact.js";
 import SearchInput from "./SearchInput.js";
+import Intro from "./Intro.js";
 // import the components in the above section
 
 // main display goes here.
@@ -55,6 +56,7 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
+      <Intro />
       <Contact />
       <Footer />
     </>

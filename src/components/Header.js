@@ -9,12 +9,12 @@ export default function Header() {
   ];
   return (
     <>
-      <header className="items-center sticky top-0">
-        <nav className="bg-white border-grey-200 px-4 lg:px-6 py-2.5">
+      <header className="items-center sticky top-0 z-10">
+        <nav className="bg-white border-grey-200 px-4 md:px-0 py-2.5">
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
             <a
               href="/"
-              className="flex items-center font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500"
+              className="flex items-center font-extrabold text-2xl  text-gradient"
             >
               Easy Grammar
             </a>
@@ -68,7 +68,7 @@ export default function Header() {
                 {navLinks.map((link) => (
                   <li
                     key={link.label}
-                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white "
+                    className="block py-2 px-2 text-gray-500 rounded hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white "
                   >
                     <a
                       href={link.href}
