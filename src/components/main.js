@@ -14,7 +14,6 @@ function Main() {
   // states declarations to store data between rendering
   const [word, setWord] = useState("");
   const [fetchData, setFetchData] = useState([]);
-
   //Update word useState hook, everytime userinput
 
   function handleWord(e) {
@@ -31,6 +30,7 @@ function Main() {
       .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
       .then((res) => {
         setFetchData(res.data);
+        
       })
       .catch((error) => {
         console.error(
