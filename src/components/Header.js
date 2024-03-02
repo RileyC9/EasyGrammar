@@ -9,7 +9,7 @@ export default function Header() {
   ];
   return (
     <>
-      <header className="items-center sticky top-0 z-10">
+      <header className="items-center sticky top-0 z-[999]">
         <nav className="bg-white border-grey-200 px-4 md:px-0 py-2.5">
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
             <a

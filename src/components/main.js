@@ -5,7 +5,6 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Contact from "./Contact.js";
 import SearchInput from "./SearchInput.js";
-import Intro from "./Intro.js";
 // import the components in the above section
 
 // main display goes here.
@@ -15,7 +14,6 @@ function Main() {
   // states declarations to store data between rendering
   const [word, setWord] = useState("");
   const [fetchData, setFetchData] = useState([]);
-
   //Update word useState hook, everytime userinput
 
   function handleWord(e) {

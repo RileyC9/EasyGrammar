@@ -1,16 +1,13 @@
 import "./App.css";
-import Contact from "./ui/Contact";
-import Footer from "./ui/Footer";
-import Header from "./ui/Header";
-import WordInput from "./ui/WordInput";
+import Main from "./components/main";
 
+// import the components in the above section
 function App() {
+  // Adding the components here
   return (
     <div className="App">
-      <Header />
-      <WordInput />
-      <Contact />
-      <Footer />
+      <p>Please add stuff here.</p>
+      <Main />
     </div>
   );
 }
