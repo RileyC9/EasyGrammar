@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <>
       <header className="items-center sticky top-0 z-[999]">
-        <nav className="bg-white border-grey-200 px-4 md:px-0 py-2.5">
+        <nav className="bg-purple-50 border-grey-200 px-4 md:px-0 pt-4 pb-2.5">
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
             <a
               href="/"
@@ -64,11 +64,11 @@ export default function Header() {
               className="hidden w-full md:block md:w-auto"
               id="navbar-default"
             >
-              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <ul className="font-medium flex flex-col p-4 md:py-2 mt-4 border border-gray-100 rounded-2xl bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 {navLinks.map((link) => (
                   <li
                     key={link.label}
-                    className="block py-2 px-2 text-gray-500 rounded hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white "
+                    className="block py-2 px-2 text-gray-500 rounded-lg hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white "
                   >
                     <a
                       href={link.href}

@@ -46,14 +46,11 @@ const Definition = (props) => {
     <>
       {/* Display if word is found */}
       {word && (
-        <div className="my-6 py-6">
+        <section className="mt-12 py-6 max-w-4xl mx-auto">
           <div className="flex flex-col mx-4 md:mx-auto md:flex-row gap-4">
-            <h2 className="text-3xl font-semibold">{word}</h2>
+            <h2 className="text-3xl font-semibold text-left">{word}</h2>
             {phoneticText && (
-              <div
-                className="rounded-full bg-gray-100 mr-auto pl-6 pr-2 py-2 h-10 gap-2 flex items-center text-sm text-gray-500"
-                onClick={playAudio}
-              >
+              <div className="rounded-full bg-white hover:bg-purple-100 mr-auto pl-6 pr-2 py-2 h-10 gap-2 flex items-center text-sm text-gray-500">
                 {/* Here for the phonetic */}
                 <span>{phoneticText}</span>
                 {/* Here for playing the audio */}
@@ -87,10 +84,10 @@ const Definition = (props) => {
           no need to display in this case */}
           <ul>{speechList}</ul>
           {/* Yujie, here displays the definition. setup the wrapper if needed */}
-          <ul className="mx-4 my-6 py-6 px-6 rounded-lg bg-gray-100 flex flex-col gap-4 md:mx-auto">
+          <ul className="mx-4 my-6 py-6 px-6 rounded-2xl bg-white hover:bg-purple-100 text-left flex flex-col gap-4 md:mx-auto">
             {defList}
           </ul>
-        </div>
+        </section>
       )}
     </>
   );

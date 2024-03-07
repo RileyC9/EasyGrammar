@@ -1,6 +1,6 @@
 export default function SearchInput({ value, handleWord, wordSubmit }) {
   return (
-    <div className="my-6 py-12 rounded-lg bg-gray-100">
+    <section className="max-w-4xl md:mx-auto my-6 py-12 px-4 md:rounded-2xl bg-purple-100">
       {/* title, only display in homepage, not in definition */}
       <div className="max-w-md mx-auto sm:max-w-lg">
         <h1 className="text-left text-4xl font-bold mt-4 text-gradient">
@@ -53,6 +53,6 @@ export default function SearchInput({ value, handleWord, wordSubmit }) {
           </button>
         </div>
       </form>
-    </div>
+    </section>
   );
 }

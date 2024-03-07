@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply max-w-[1024px] mx-auto md:w-10/12 text-center;
+  @apply max-w-[1024px] min-w-[320px] mx-auto md:w-10/12 text-center bg-purple-50;
 }
 
 .text-gradient {

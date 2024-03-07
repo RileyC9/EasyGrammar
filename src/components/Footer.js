@@ -5,7 +5,7 @@ export default function Footer() {
     { href: "#", label: "About" },
   ];
   return (
-    <footer className="items-center bg-gray-100 py-2 mt-12">
+    <footer className="items-center bg-purple-100 py-2 mt-12 md:rounded-t-2xl">
       <div className="">
         {/* for social media */}
         <h2 className="text-2xl font-bold text-gradient mt-6">Easy Grammar</h2>

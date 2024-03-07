@@ -5,6 +5,9 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Contact from "./Contact.js";
 import SearchInput from "./SearchInput.js";
+import Intro from "./Intro.js";
+import Practice from "./Practice.js";
+import Feedback from "./Feedback.js";
 // import the components in the above section
 
 // main display goes here.
@@ -55,6 +58,9 @@ function Main() {
         wordSubmit={wordSubmit}
       />
       <DefinitionList definition={fetchData} />
+      <Practice />
+      <Feedback />
+      <Intro />
       <Contact />
       <Footer />
     </>
