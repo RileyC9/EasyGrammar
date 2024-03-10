@@ -14,8 +14,6 @@ function Main() {
   // states declarations to store data between rendering
   const [word, setWord] = useState("");
   const [fetchData, setFetchData] = useState([]);
-  const [wordFound, setWordFound] = useState();
-  const [result, setResult] = useState();
   //Update word useState hook, everytime userinput
 
   function handleWord(e) {
@@ -31,33 +29,22 @@ function Main() {
     await axios
       .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
       .then((res) => {
-        if (res.data) {
-          console.log("hi");
-          setWordFound(true);
-          setFetchData(res.data);
-        } else {
-          setWordFound(false);
-        }
+        setFetchData(res.data);
       })
       .catch((error) => {
         console.error(
           "Error fetching from the word: " + word + ".\n Error: ",
           error
         );
-        setWordFound(false);
-        setFetchData({});
+        // set error message if word not found
+        setFetchData([{ error: "Word not found" }]);
       });
   };
   // re-render the page when word definition is updated
   // let result;
   useEffect(() => {
     console.log(fetchData);
-    if (wordFound) {
-      setResult(<DefinitionList definition={fetchData} />);
-    } else if (wordFound === false) {
-      setResult(<p>Word not found.</p>);
-    }
-  }, [fetchData, wordFound]);
+  }, [fetchData]);
 
   return (
     <>
@@ -69,8 +56,7 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
-      {/* <DefinitionList definition={fetchData} /> */}
-      {result}
+      <DefinitionList definition={fetchData} />
       <Contact />
       <Footer />
     </>
