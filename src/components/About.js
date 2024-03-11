@@ -1,3 +1,6 @@
+import React from "react";
+import Contact from "./Contact";
+
 export default function Intro() {
   return (
     <>
@@ -19,6 +22,7 @@ export default function Intro() {
         </div>
       </div>
       <div></div>
+      <Contact />
     </>
   );
 }

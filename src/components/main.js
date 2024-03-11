@@ -3,11 +3,8 @@ import axios from "axios";
 import DefinitionList from "./DefinitionList";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import Contact from "./Contact.js";
+import About from "./About.js";
 import SearchInput from "./SearchInput.js";
-import Intro from "./Intro.js";
-import Practice from "./Practice.js";
-import Feedback from "./Feedback.js";
 // import the components in the above section
 
 // main display goes here.
@@ -39,10 +36,12 @@ function Main() {
           "Error fetching from the word: " + word + ".\n Error: ",
           error
         );
-        setFetchData({});
+        // set error message if word not found
+        setFetchData([{ error: "Word not found" }]);
       });
   };
   // re-render the page when word definition is updated
+  // let result;
   useEffect(() => {
     console.log(fetchData);
   }, [fetchData]);
@@ -58,10 +57,7 @@ function Main() {
         wordSubmit={wordSubmit}
       />
       <DefinitionList definition={fetchData} />
-      <Practice />
-      <Feedback />
-      <Intro />
-      <Contact />
+      <About />
       <Footer />
     </>
   );
