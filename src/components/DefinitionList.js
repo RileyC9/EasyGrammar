@@ -64,10 +64,7 @@ const DefinitionList = ({ definition }) => {
             <div className="flex flex-col mx-4 md:mx-auto md:flex-row gap-4">
               <h2 className="text-3xl font-semibold">{word}</h2>
               {phoneticText && (
-                <div
-                  className="rounded-full bg-gray-100 mr-auto pl-6 pr-2 py-2 h-10 gap-2 flex items-center text-sm text-gray-500"
-                  onClick={playAudio}
-                >
+                <div className="rounded-full bg-gray-100 mr-auto pl-6 pr-2 py-2 h-10 gap-2 flex items-center text-sm text-gray-500">
                   {/* Here for the phonetic */}
                   <span>{phoneticText}</span>
                   {/* Here for playing the audio */}
