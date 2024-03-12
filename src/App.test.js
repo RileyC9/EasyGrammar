@@ -2,6 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import SearchInput from './components/SearchInput';
 
+// test to find if the search button exists in the SearchInput component
+
 test('renders a search button', () => {
     render(<SearchInput />);
   
@@ -12,6 +14,7 @@ test('renders a search button', () => {
     expect(searchButton).toBeInTheDocument();
   });
   
+  // test to find if the text input field exists in the SearchInput component
   test('renders a search input field', () => {
     render(<SearchInput />);
   
