@@ -11,7 +11,7 @@ export default function SearchInput({ value, handleWord, wordSubmit }) {
         </p>
       </div>
       {/* input */}
-      <form className="max-w-md mx-auto sm:max-w-lg" onSubmit={wordSubmit}>
+      <form data-testid="search-form" className="max-w-md mx-auto sm:max-w-lg" onSubmit={wordSubmit}>
         <label
           htmlFor="word-input"
           className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
