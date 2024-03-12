@@ -1,8 +1,23 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import SearchInput from './components/SearchInput';
 
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
+test('renders a search button', () => {
+    render(<SearchInput />);
+  
+    // Use React Testing Library's queryByText to find the search button
+    const searchButton = screen.queryByRole('button', { name: /Search/i });
+  
+    // Assert that the search button exists
+    expect(searchButton).toBeInTheDocument();
+  });
+  
+  test('renders a search input field', () => {
+    render(<SearchInput />);
+  
+    // Use getByPlaceholderText to find the search input field by its placeholder text
+    const searchInput = screen.getByPlaceholderText(/Type to search a word/i);
+  
+    // Assert that the search input field exists
+    expect(searchInput).toBeInTheDocument();
+  });
