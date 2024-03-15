@@ -20,7 +20,7 @@ const DefinitionList = ({ definition }) => {
 
   // get the definition and phonetic if no error
   if (error === undefined) {
-    // Going through the dictionary API to get definitions
+    // Going through the dictionary API to get only one definition
     definition.slice(0, 1).forEach((element) =>
       element.meanings.forEach((set) =>
         set.definitions.slice(0, 1).forEach((definition) => {
