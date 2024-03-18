@@ -31,11 +31,11 @@ const DefinitionList = ({ definition }) => {
         })
       )
     );
-    // Find if there is any audio for the phonetic
+    // Find if there is audio and text for the phonetic
     const phoneticWithAudio = definition[0]?.phonetics.find(
-      (phonetic) => phonetic.audio
+      (phonetic) => phonetic.audio && phonetic.text
     );
-    // 1. if audio exists, get 1st audio and text
+    // 1. if audio and text exist, get the text and audio
     if (phoneticWithAudio) {
       phoneticText = phoneticWithAudio.text;
       audioSrc = phoneticWithAudio.audio;
