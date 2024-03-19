@@ -31,25 +31,39 @@ const DefinitionList = ({ definition }) => {
         })
       )
     );
+    // Get the phonetic text at first, if it exists; undefined otherwise
+    phoneticText = definition[0]?.phonetics.find(
+      (phonetic) => phonetic.text
+    )?.text;
     // Find if there is audio and text for the phonetic
     const phoneticWithAudio = definition[0]?.phonetics.find(
       (phonetic) => phonetic.audio && phonetic.text
     );
-    // 1. if audio and text exist, get the text and audio
+    // 1. if audio and text exist, get the audio and update the text
     if (phoneticWithAudio) {
       phoneticText = phoneticWithAudio.text;
       audioSrc = phoneticWithAudio.audio;
+    } else {
+      // 2. if only audio exist, get the audio
+      const phoneticAudio = definition[0]?.phonetics.find(
+        (phonetic) => phonetic.audio
+      );
+      if (phoneticAudio) {
+        audioSrc = phoneticAudio.audio;
+      }
+    }
+    if (audioSrc) {
       speechList.push(
         // Here generates html elements for every audio
         <li key={id++}>
-          <audio src={audioSrc} ref={audioRef} style={{ display: "none" }} />
+          <audio
+            id="phonetic-audio"
+            src={audioSrc}
+            ref={audioRef}
+            style={{ display: "none" }}
+          />
         </li>
       );
-    } else {
-      // 2. if no audio, get 1st text
-      phoneticText = definition[0]?.phonetics.find(
-        (phonetic) => phonetic.text
-      )?.text;
     }
   }
 
@@ -71,12 +85,16 @@ const DefinitionList = ({ definition }) => {
             <div className="flex flex-col mx-4 md:mx-auto md:flex-row gap-4">
               <h2 className="text-3xl font-semibold text-left">{word}</h2>
               {phoneticText && (
-                <div className="rounded-full bg-white hover:bg-purple-100 mr-auto pl-6 pr-2 py-2 h-10 gap-2 flex items-center text-sm text-gray-500">
+                <div
+                  id="phonetic-wrapper"
+                  className="rounded-full bg-white hover:bg-purple-100 mr-auto pl-6 pr-2 py-2 h-10 gap-2 flex items-center text-sm text-gray-500"
+                >
                   {/* Here for the phonetic */}
-                  <span>{phoneticText}</span>
+                  <span id="phonetic-text">{phoneticText}</span>
                   {/* Here for playing the audio */}
                   {audioSrc ? (
                     <div
+                      id="audio-button"
                       className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center hover:cursor-pointer hover:bg-pink-500 hover:scale-105 transition-transform"
                       onClick={playAudio}
                     >
