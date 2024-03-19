@@ -31,19 +31,26 @@ const DefinitionList = ({ definition }) => {
         })
       )
     );
-    // Going through the dictionary API to get only one phonetic audio
-    definition.slice(0, 1).forEach((element) =>
-      element.phonetics.slice(0, 1).forEach((phonetic) => {
-        phoneticText = phonetic.text;
-        audioSrc = phonetic.audio;
-        speechList.push(
-          // Yujie, Here generates html elements for every audio
-          <li key={id++}>
-            <audio src={audioSrc} ref={audioRef} style={{ display: "none" }} />
-          </li>
-        );
-      })
+    // Find if there is audio and text for the phonetic
+    const phoneticWithAudio = definition[0]?.phonetics.find(
+      (phonetic) => phonetic.audio && phonetic.text
     );
+    // 1. if audio and text exist, get the text and audio
+    if (phoneticWithAudio) {
+      phoneticText = phoneticWithAudio.text;
+      audioSrc = phoneticWithAudio.audio;
+      speechList.push(
+        // Here generates html elements for every audio
+        <li key={id++}>
+          <audio src={audioSrc} ref={audioRef} style={{ display: "none" }} />
+        </li>
+      );
+    } else {
+      // 2. if no audio, get 1st text
+      phoneticText = definition[0]?.phonetics.find(
+        (phonetic) => phonetic.text
+      )?.text;
+    }
   }
 
   return (
