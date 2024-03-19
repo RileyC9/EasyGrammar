@@ -3,7 +3,7 @@ import axios from "axios";
 import DefinitionList from "./DefinitionList";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import About from "./About.js";
+import Contact from "./Contact.js";
 import SearchInput from "./SearchInput.js";
 // import the components in the above section
 
@@ -57,7 +57,7 @@ function Main() {
         wordSubmit={wordSubmit}
       />
       <DefinitionList definition={fetchData} />
-      <About />
+      <Contact />
       <Footer />
     </>
   );
