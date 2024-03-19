@@ -31,25 +31,39 @@ const DefinitionList = ({ definition }) => {
         })
       )
     );
-    // Find if there is any audio for the phonetic
+    // Get the phonetic text at first, if it exists; undefined otherwise
+    phoneticText = definition[0]?.phonetics.find(
+      (phonetic) => phonetic.text
+    )?.text;
+    // Find if there is audio and text for the phonetic
     const phoneticWithAudio = definition[0]?.phonetics.find(
-      (phonetic) => phonetic.audio
+      (phonetic) => phonetic.audio && phonetic.text
     );
-    // 1. if audio exists, get 1st audio and text
+    // 1. if audio and text exist, get the audio and update the text
     if (phoneticWithAudio) {
       phoneticText = phoneticWithAudio.text;
       audioSrc = phoneticWithAudio.audio;
+    } else {
+      // 2. if only audio exist, get the audio
+      const phoneticAudio = definition[0]?.phonetics.find(
+        (phonetic) => phonetic.audio
+      );
+      if (phoneticAudio) {
+        audioSrc = phoneticAudio.audio;
+      }
+    }
+    if (audioSrc) {
       speechList.push(
         // Here generates html elements for every audio
         <li key={id++}>
-          <audio src={audioSrc} ref={audioRef} style={{ display: "none" }} />
+          <audio
+            id="phonetic-audio"
+            src={audioSrc}
+            ref={audioRef}
+            style={{ display: "none" }}
+          />
         </li>
       );
-    } else {
-      // 2. if no audio, get 1st text
-      phoneticText = definition[0]?.phonetics.find(
-        (phonetic) => phonetic.text
-      )?.text;
     }
   }
 
@@ -69,14 +83,18 @@ const DefinitionList = ({ definition }) => {
         word && (
           <section className="mt-12 py-6 max-w-4xl mx-auto">
             <div className="flex flex-col mx-4 md:mx-auto md:flex-row gap-4">
-              <h2 className="text-3xl font-semibold">{word}</h2>
+              <h2 className="text-3xl font-semibold text-left">{word}</h2>
               {phoneticText && (
-                <div className="rounded-full bg-gray-100 mr-auto pl-6 pr-2 py-2 h-10 gap-2 flex items-center text-sm text-gray-500">
+                <div
+                  id="phonetic-wrapper"
+                  className="rounded-full bg-white hover:bg-purple-100 mr-auto pl-6 pr-2 py-2 h-10 gap-2 flex items-center text-sm text-gray-500"
+                >
                   {/* Here for the phonetic */}
-                  <span>{phoneticText}</span>
+                  <span id="phonetic-text">{phoneticText}</span>
                   {/* Here for playing the audio */}
                   {audioSrc ? (
                     <div
+                      id="audio-button"
                       className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center hover:cursor-pointer hover:bg-pink-500 hover:scale-105 transition-transform"
                       onClick={playAudio}
                     >
@@ -105,7 +123,7 @@ const DefinitionList = ({ definition }) => {
           no need to display in this case */}
             <ul>{speechList}</ul>
             {/* Yujie, here displays the definition. setup the wrapper if needed */}
-            <ul className="mx-4 my-6 py-6 px-6 rounded-lg bg-gray-100 flex flex-col gap-4 md:mx-auto">
+            <ul className="mx-4 my-6 py-6 px-6 rounded-2xl bg-white hover:bg-purple-100 text-left flex flex-col gap-4 md:mx-auto">
               {defList}
             </ul>
           </section>
