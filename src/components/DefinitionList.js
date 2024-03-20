@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-const DefinitionList = ({ definition }) => {
+const DefinitionList = ({ definition, display }) => {
   // Check if error exists
   const error = definition?.[0]?.error;
   // get the word for display
@@ -69,7 +69,7 @@ const DefinitionList = ({ definition }) => {
 
   return (
     <>
-      {error ? (
+      {display? (error? (
         // display the error if error exists
         <div className="my-6 py-6">
           <div className="mx-4 md:mx-auto">
@@ -128,6 +128,14 @@ const DefinitionList = ({ definition }) => {
             </ul>
           </section>
         )
+      )): (
+        <div className="my-6 py-6">
+          <div className="mx-4 md:mx-auto">
+            <h2 className="text-xl md:text-3xl text-gray-500">
+              Please enter a word and search for the information and generate a relative image.
+            </h2>
+          </div>
+        </div>
       )}
     </>
   );
