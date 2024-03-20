@@ -97,6 +97,7 @@ const DefinitionList = ({ definition }) => {
                       id="audio-button"
                       className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center hover:cursor-pointer hover:bg-pink-500 hover:scale-105 transition-transform"
                       onClick={playAudio}
+                      data-testid='audio-button'
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
