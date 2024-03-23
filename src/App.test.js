@@ -1,8 +1,34 @@
-import React from "react";
+
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import SearchInput from './components/SearchInput';
 import { getByTestId, render, screen } from "@testing-library/react";
-//import userEvent from "@testing-library/user-event";
 import DefinitionList from "./components/DefinitionList";
 
+// test to find if the search button exists in the SearchInput component
+test('renders a search button', () => {
+    render(<SearchInput />);
+  
+    // Use React Testing Library's queryByText to find the search button
+    const searchButton = screen.queryByRole('button', { name: /Search/i });
+  
+    // Assert that the search button exists
+    expect(searchButton).toBeInTheDocument();
+  });
+  
+  // test to find if the text input field exists in the SearchInput component
+  test('renders a search input field', () => {
+    render(<SearchInput />);
+  
+    // Use getByPlaceholderText to find the search input field by its placeholder text
+    const searchInput = screen.getByPlaceholderText(/Type to search a word/i);
+  
+    // Assert that the search input field exists
+    expect(searchInput).toBeInTheDocument();
+  });
+
+
+// Unit testes for Definition List feature
 describe("DefinitionList component", () => {
 
   // Test case: Renders definition list if there is no error
