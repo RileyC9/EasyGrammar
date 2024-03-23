@@ -14,10 +14,17 @@ function Main() {
   // states declarations to store data between rendering
   const [word, setWord] = useState("");
   const [fetchData, setFetchData] = useState([]);
+  const [definitionListDisplay, setDefinitionListDisplay] = useState(false);
   //Update word useState hook, everytime userinput
 
   function handleWord(e) {
     setWord(e.target.value);
+    // if (e.target.value === "" && e.key === "Enter") {
+    //   setDefinitionListDisplay(false);
+    // }
+    if (e.target.value === "") {
+      setDefinitionListDisplay(false);
+    }
   }
   // When Search button is click, fetch data from free dictionary api of the word in the form.
   // Save the definition fetched into fetch data useState hook
@@ -25,11 +32,16 @@ function Main() {
 
   const wordSubmit = async (e) => {
     e.preventDefault();
-    console.log(word);
+    // version 2 of empty input field
+    // if (word === "") {
+    //   setDefinitionListDisplay(false);
+    // } else {
+      console.log(word);
     await axios
       .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
       .then((res) => {
         setFetchData(res.data);
+        setDefinitionListDisplay(true);
       })
       .catch((error) => {
         console.error(
@@ -38,7 +50,10 @@ function Main() {
         );
         // set error message if word not found
         setFetchData([{ error: "Word not found" }]);
+        setDefinitionListDisplay(true);
       });
+      // version 2 of empty input field
+    // }
   };
   // re-render the page when word definition is updated
   // let result;
@@ -56,7 +71,7 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
-      <DefinitionList definition={fetchData} />
+      <DefinitionList definition={fetchData} display={definitionListDisplay}/>
       <Contact />
       <Footer />
     </>
