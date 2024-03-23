@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import SampleSentences from "./SampleSentence.js";
 import DefinitionList from "./DefinitionList";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
@@ -72,6 +73,7 @@ function Main() {
         wordSubmit={wordSubmit}
       />
       <DefinitionList definition={fetchData} display={definitionListDisplay}/>
+      <SampleSentences data={fetchData} />
       <Contact />
       <Footer />
     </>
