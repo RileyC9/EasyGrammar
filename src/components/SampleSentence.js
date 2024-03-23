@@ -1,6 +1,6 @@
 import React from "react";
 
-const SampleSentences = ({ data }) => {
+const SampleSentences = ({ data, display }) => {
   // Check if error exists
   const error = data?.[0]?.error;
   // generate unique id for every rendered element
@@ -22,7 +22,7 @@ const SampleSentences = ({ data }) => {
 
   return (
     <>
-      {error ? (
+      {display? (error ? (
         <></>
       ) : (
         // display the word and definition if no error(
@@ -34,7 +34,7 @@ const SampleSentences = ({ data }) => {
               {exampleList}
             </ul>
           </section>
-        )
+        )): (<></>)
       }
     </>
   );
