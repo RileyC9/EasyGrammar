@@ -1,12 +1,12 @@
 export default function SearchInput({ value, handleWord, wordSubmit }) {
   return (
-    <div className="my-6 py-6 rounded-lg bg-gray-100">
+    <section className="max-w-4xl md:mx-auto my-6 py-12 px-4 md:rounded-2xl bg-purple-100">
       {/* title, only display in homepage, not in definition */}
       <div className="max-w-md mx-auto sm:max-w-lg">
-        <h1 className="text-4xl font-bold mt-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
+        <h1 className="text-left text-4xl font-bold mt-4 text-gradient">
           Easy Grammar
         </h1>
-        <p className="text-lg mb-4 font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+        <p className="text-left text-lg mb-4 font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Your Personal English Learning Assistant
         </p>
       </div>
@@ -47,12 +47,12 @@ export default function SearchInput({ value, handleWord, wordSubmit }) {
           />
           <button
             type="submit"
-            className="text-white absolute end-2.5 bottom-2.5 bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 rounded-lg text-sm px-4 py-2 dark:bg-blue-600"
+            className="absolute end-2.5 bottom-2.5 btn-primary"
           >
             Search
           </button>
         </div>
       </form>
-    </div>
+    </section>
   );
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import DefinitionList from 'DefinitionList';
+import DefinitionList from "./DefinitionList";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Contact from "./Contact.js";
@@ -14,7 +14,6 @@ function Main() {
   // states declarations to store data between rendering
   const [word, setWord] = useState("");
   const [fetchData, setFetchData] = useState([]);
-
   //Update word useState hook, everytime userinput
 
   function handleWord(e) {
@@ -37,10 +36,12 @@ function Main() {
           "Error fetching from the word: " + word + ".\n Error: ",
           error
         );
-        setFetchData({});
+        // set error message if word not found
+        setFetchData([{ error: "Word not found" }]);
       });
   };
   // re-render the page when word definition is updated
+  // let result;
   useEffect(() => {
     console.log(fetchData);
   }, [fetchData]);
@@ -55,10 +56,10 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
+      <DefinitionList definition={fetchData} />
       <Contact />
       <Footer />
     </>
-    // <DefinitionList definition={fetchData} />
   );
 }
 
