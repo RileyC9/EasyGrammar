@@ -4,12 +4,12 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const navLinks = [
     { href: "#", label: "Home" },
-    { href: "#", label: "Practice" },
     { href: "#", label: "About" },
+    { href: "mailto:easygrammar193@gmail.com", label: "Contact" },
   ];
   return (
     <>
-      <header className="sticky top-0 z-[999] bg-purple-50 border-gray-200 px-4 md:px-0 pt-4 pb-2.5">
+      <header className="sticky top-0 z-[999] bg-purple-50 border-gray-200 px-4 pt-4 pb-2.5 md:px-0 md:-mx-2">
         <nav className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
           <a
             href="/"
@@ -67,17 +67,13 @@ export default function Header() {
           >
             <ul className="font-medium flex flex-col p-4 md:py-2 mt-4 border border-gray-100 rounded-2xl bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               {navLinks.map((link) => (
-                <li
-                  key={link.label}
-                  className="block py-2 px-2 text-gray-500 rounded-lg hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white"
-                >
-                  <a
-                    href={link.href}
-                    className="md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >
-                    {link.label}
-                  </a>
-                </li>
+                <a href={link.href} id={link.label} key={link.label}>
+                  <li className="block py-2 px-2 text-gray-500 rounded-lg hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white">
+                    <span className="md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                      {link.label}
+                    </span>
+                  </li>
+                </a>
               ))}
             </ul>
           </div>

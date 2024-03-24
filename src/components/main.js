@@ -39,7 +39,7 @@ function Main() {
     // if (word === "") {
     //   setDefinitionListDisplay(false);
     // } else {
-      console.log(word);
+    console.log(word);
     await axios
       .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
       .then((res) => {
@@ -57,7 +57,7 @@ function Main() {
         setDefinitionListDisplay(true);
         setSampleSentenceDisplay(true);
       });
-      // version 2 of empty input field
+    // version 2 of empty input field
     // }
   };
   // re-render the page when word definition is updated
@@ -67,7 +67,7 @@ function Main() {
   }, [fetchData]);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Header />
       {/* <input onChange={handleWord} val={word} />
       <button onClick={wordSubmit}>click here</button> */}
@@ -76,11 +76,11 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
-      <DefinitionList definition={fetchData} display={definitionListDisplay}/>
-      <SampleSentences data={fetchData} display={sampleSentenceDisplay}/>
+      <DefinitionList definition={fetchData} display={definitionListDisplay} />
+      <SampleSentences data={fetchData} display={sampleSentenceDisplay} />
       <Contact />
       <Footer />
-    </>
+    </div>
   );
 }
 

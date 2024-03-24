@@ -13,30 +13,38 @@ const SampleSentences = ({ data, display }) => {
     data.slice(0, 1).forEach((element) =>
       element.meanings.forEach((set) => {
         // Go through the fetched data to extract the sample sentences and store in exampleList
-        set.definitions.forEach((definition) => 
-          definition.example? exampleList.push(<li key={id++}>{`${definition.example}`}</li>):null
+        set.definitions.forEach((definition) =>
+          definition.example
+            ? exampleList.push(
+                <li
+                  key={id++}
+                  className="italic text-gray-500 hover:text-gray-700"
+                >
+                  {`"${definition.example}"`}
+                </li>
+              )
+            : null
         );
       })
     );
   }
 
   return (
-    <>
-      {display? (error ? (
-        <></>
-      ) : (
-        // display the word and definition if no error(
-          <section className="mt-12 py-6 max-w-4xl mx-auto">
-            <h2>Sample sentences:</h2>
-            {/* Sample sentence */}
-            {/* Yujie, please modify the Sample sentence appearance */}
-            <ul className="mx-4 my-6 py-6 px-6 rounded-2xl bg-white hover:bg-purple-100 text-left flex flex-col gap-4 md:mx-auto">
-              {exampleList}
-            </ul>
-          </section>
-        )): (<></>)
-      }
-    </>
+    <section className="block w-full">
+      {/* display the word and definition if input is valid and no error and exampleList is not empty */}
+      {display && !error && exampleList.length > 0 && (
+        <div className="max-w-4xl mx-auto">
+          {/* Sample sentence */}
+          {/* Yujie, please modify the Sample sentence appearance */}
+          <ul className="mx-4 p-6 rounded-2xl bg-white shadow-md text-left flex flex-col gap-6 md:mx-auto">
+            <div className="-ml-6 -mt-6 mr-auto rounded-tl-2xl rounded-br-2xl bg-purple-100">
+              <h2 className="font-semibold p-4">Usage Examples</h2>
+            </div>
+            {exampleList}
+          </ul>
+        </div>
+      )}
+    </section>
   );
 };
 
