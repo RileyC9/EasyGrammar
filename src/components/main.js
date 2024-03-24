@@ -16,6 +16,7 @@ function Main() {
   const [word, setWord] = useState("");
   const [fetchData, setFetchData] = useState([]);
   const [definitionListDisplay, setDefinitionListDisplay] = useState(false);
+  const [sampleSentenceDisplay, setSampleSentenceDisplay] = useState(false);
   //Update word useState hook, everytime userinput
 
   function handleWord(e) {
@@ -25,6 +26,7 @@ function Main() {
     // }
     if (e.target.value === "") {
       setDefinitionListDisplay(false);
+      setSampleSentenceDisplay(false);
     }
   }
   // When Search button is click, fetch data from free dictionary api of the word in the form.
@@ -37,12 +39,13 @@ function Main() {
     // if (word === "") {
     //   setDefinitionListDisplay(false);
     // } else {
-      console.log(word);
+    console.log(word);
     await axios
       .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
       .then((res) => {
         setFetchData(res.data);
         setDefinitionListDisplay(true);
+        setSampleSentenceDisplay(true);
       })
       .catch((error) => {
         console.error(
@@ -52,8 +55,9 @@ function Main() {
         // set error message if word not found
         setFetchData([{ error: "Word not found" }]);
         setDefinitionListDisplay(true);
+        setSampleSentenceDisplay(true);
       });
-      // version 2 of empty input field
+    // version 2 of empty input field
     // }
   };
   // re-render the page when word definition is updated
@@ -63,7 +67,7 @@ function Main() {
   }, [fetchData]);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Header />
       {/* <input onChange={handleWord} val={word} />
       <button onClick={wordSubmit}>click here</button> */}
@@ -72,11 +76,11 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
-      <DefinitionList definition={fetchData} display={definitionListDisplay}/>
-      <SampleSentences data={fetchData} />
+      <DefinitionList definition={fetchData} display={definitionListDisplay} />
+      <SampleSentences data={fetchData} display={sampleSentenceDisplay} />
       <Contact />
       <Footer />
-    </>
+    </div>
   );
 }
 
