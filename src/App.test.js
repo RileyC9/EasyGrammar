@@ -1,34 +1,34 @@
-
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import SearchInput from './components/SearchInput';
+import React from "react";
 import { getByTestId, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import SearchInput from "./components/SearchInput";
 import DefinitionList from "./components/DefinitionList";
+import SampleSentences from "./components/SampleSentence";
 
+// testing SearchInput feature
 // test to find if the search button exists in the SearchInput component
 test('renders a search button', () => {
-    render(<SearchInput />);
-  
-    // Use React Testing Library's queryByText to find the search button
-    const searchButton = screen.queryByRole('button', { name: /Search/i });
-  
-    // Assert that the search button exists
-    expect(searchButton).toBeInTheDocument();
-  });
-  
-  // test to find if the text input field exists in the SearchInput component
-  test('renders a search input field', () => {
-    render(<SearchInput />);
-  
-    // Use getByPlaceholderText to find the search input field by its placeholder text
-    const searchInput = screen.getByPlaceholderText(/Type to search a word/i);
-  
-    // Assert that the search input field exists
-    expect(searchInput).toBeInTheDocument();
-  });
+  render(<SearchInput />);
 
+  // Use React Testing Library's queryByText to find the search button
+  const searchButton = screen.queryByRole('button', { name: /Search/i });
 
-// Unit testes for Definition List feature
+  // Assert that the search button exists
+  expect(searchButton).toBeInTheDocument();
+});
+
+// test to find if the text input field exists in the SearchInput component
+test('renders a search input field', () => {
+  render(<SearchInput />);
+
+  // Use getByPlaceholderText to find the search input field by its placeholder text
+  const searchInput = screen.getByPlaceholderText(/Type to search a word/i);
+
+  // Assert that the search input field exists
+  expect(searchInput).toBeInTheDocument();
+});
+
+ // testing DefinitionList feature
 describe("DefinitionList component", () => {
 
   // Test case: Renders definition list if there is no error
@@ -48,7 +48,7 @@ describe("DefinitionList component", () => {
     ];
 
     // Render the DefinitionList component with mocked data
-    render(<DefinitionList definition={definition} />);
+    render(<DefinitionList definition={definition} display={true} />);
 
     // Find elements rendered by the component and assert their presence
     const wordElement = screen.getByText("example");
@@ -73,7 +73,7 @@ describe("DefinitionList component", () => {
     ];
 
     // Render the DefinitionList component with mocked error data
-    render(<DefinitionList definition={errorDefinition} />);
+    render(<DefinitionList definition={errorDefinition} display={true} />);
 
     // Find and assert the presence of the error message element
     const errorMessage = screen.getByText(
@@ -83,8 +83,8 @@ describe("DefinitionList component", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-  // Test case: Renders audio button if there is an audio link
-  it('renders audio button if there is an audio link', () => {
+  // Test case: testing audio button feature
+  test('renders audio button if there is an audio link', () => {
     // Render the DefinitionList component with a sample definition containing an audio link
     render(
       <DefinitionList
@@ -109,6 +109,7 @@ describe("DefinitionList component", () => {
             ],
           },
         ]}
+        display={true}
       />
     );
 
@@ -118,7 +119,7 @@ describe("DefinitionList component", () => {
   });
 
   // Test case: Renders audio button even if there is an error or no audio link fetched
-  it('renders audio button even if there is an error or no audio link fetched', () => {
+  test('renders audio button even if there is an error or no audio link fetched', () => {
     // Render the DefinitionList component with an error definition
     render(
       <DefinitionList
@@ -133,5 +134,57 @@ describe("DefinitionList component", () => {
     // Check that the audio button is not present when there is an error or no audio link fetched
     const audioButton = screen.queryByTestId('audio-button');
     expect(audioButton).not.toBeInTheDocument();
+  });
+});
+
+// testing SampleSentence feature 
+describe("SampleSentences component", () => {
+
+  // test to check if the component renders correctly with fetched data
+  test("renders correctly with fetched data", () => {
+
+    //Sample data with fetched data containing a sample sentence 
+    const testData = [
+      {
+        meanings: [
+          {
+            definitions: [
+              {
+                example: "This is a sample sentence.",
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    // Render the SampleSentences component with the test data
+    const { getByText } = render(
+      <SampleSentences data={testData} display={true} />
+    );
+
+    // Assert that the "Usage Exapmles" title and the sample sentence are rendered correctly
+    expect(getByText(/Usage Examples/i)).toBeInTheDocument();
+    expect(getByText(/This is a sample sentence./i)).toBeInTheDocument();
+  });
+
+  // Test to check if the component does not render with a bad search input
+  test("does not render with bad search input", () => {
+
+    // Sample data with bad search input
+    const testData = [
+      {
+        error: "Bad input",
+      },
+    ];
+
+    // Render the SampleSentence component with the test data
+    const { queryByText } = render(
+      <SampleSentences data={testData} display={true} />
+    );
+
+    // Assert that neither the "Usage Examples" title nor the sample sentence is rendered
+    expect(queryByText(/Usage Examples/i)).toBeNull();
+    expect(queryByText(/This is a sample sentence./i)).toBeNull();
   });
 });
