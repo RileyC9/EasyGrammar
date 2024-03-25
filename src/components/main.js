@@ -76,7 +76,10 @@ function Main() {
         handleWord={handleWord}
         wordSubmit={wordSubmit}
       />
-      <DefinitionList definition={fetchData} display={definitionListDisplay} />
+      <DefinitionList definition={fetchData} display={definitionListDisplay}>
+        {/* Here for AI-Generated image */}
+        <img src="/intro.png" alt="intro" />
+      </DefinitionList>
       <SampleSentences data={fetchData} display={sampleSentenceDisplay} />
       <Contact />
       <Footer />

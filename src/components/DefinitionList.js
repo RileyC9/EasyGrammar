@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-const DefinitionList = ({ definition, display }) => {
+const DefinitionList = ({ definition, display, children }) => {
   // Check if error exists
   const error = definition?.[0]?.error;
   // get the word for display
@@ -123,12 +123,20 @@ const DefinitionList = ({ definition, display }) => {
           no need to display in this case */}
               <ul>{speechList}</ul>
               {/* Yujie, here displays the definition. setup the wrapper if needed */}
-              <ul className="mx-4 mt-6 p-6 rounded-2xl bg-white shadow-md text-left flex flex-col gap-6 md:mx-auto">
+              <div className="mx-4 mt-6 p-6 rounded-2xl bg-white shadow-md text-left flex flex-col gap-6 md:mx-auto">
                 <div className="-ml-6 -mt-6 mr-auto rounded-tl-2xl rounded-br-2xl bg-purple-100">
                   <h2 className="font-semibold p-4">Meanings</h2>
                 </div>
-                {defList}
-              </ul>
+                <div className="md:flex block justify-between">
+                  <ul className="flex flex-col gap-6 w-full md:w-1/2">
+                    {defList}
+                  </ul>
+                  <div className="w-full mt-6 md:mt-0 md:w-1/2 p-4 bg-purple-50 rounded-lg flex flex-col gap-2 items-center">
+                    {children}
+                    <button className="btn-primary">Practice</button>
+                  </div>
+                </div>
+              </div>
             </div>
           )
         )
