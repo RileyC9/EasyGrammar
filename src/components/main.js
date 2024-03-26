@@ -6,6 +6,8 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Contact from "./Contact.js";
 import SearchInput from "./SearchInput.js";
+import ImageUnite from "./ImageUnite.js";
+
 // import the components in the above section
 
 // main display goes here.
@@ -83,6 +85,7 @@ function Main() {
       <SampleSentences data={fetchData} display={sampleSentenceDisplay} />
       <Contact />
       <Footer />
+      <ImageUnite />
     </div>
   );
 }
