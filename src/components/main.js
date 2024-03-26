@@ -85,6 +85,7 @@ function Main() {
       <SampleSentences data={fetchData} display={sampleSentenceDisplay} />
       <Contact />
       <Footer />
+      {/* below is for testing purpose  */}
       <ImageUnite />
     </div>
   );
