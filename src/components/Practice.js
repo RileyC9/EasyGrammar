@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 // Please define the props for this component
-export default function Practice() {
+export default function Practice({ onUserInput }) {
+  const [userInput, setUserInput] = useState("");
+  const navigate = useNavigate();
+  // Here for the toggle buttons of the help section
+  const [isOpen, setIsOpen] = useState([false, false]);
   // Here for the key words and example sentence, please replace the following with the data in props
   const helpInfo = [
     {
@@ -15,8 +20,19 @@ export default function Practice() {
     },
   ];
 
-  // Here for the toggle buttons of the help section
-  const [isOpen, setIsOpen] = useState([false, false]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleInputChange = (e) => {
+    setUserInput(e.target.value);
+  };
+
+  const handleInputSubmit = (e) => {
+    e.preventDefault();
+    onUserInput(userInput);
+    navigate("/feedback");
+  };
 
   const toggleOpen = (index) => {
     const newIsOpen = [...isOpen];
@@ -41,14 +57,20 @@ export default function Practice() {
             />
           </div>
         </div>
+
         <div className="mt-8">
+          <Link to="/" className="btn-primary">
+            Back to Search
+          </Link>
           <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
             Your Answer:
           </h3>
           {/* Here for User input */}
-          <form className="w-full">
+          <form className="w-full" onSubmit={handleInputSubmit}>
             <div className="relative">
               <textarea
+                value={userInput}
+                onChange={handleInputChange}
                 type="search"
                 id="word-input"
                 className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

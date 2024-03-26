@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // Please define the props for this component
-export default function Feedback() {
+export default function Feedback({ userInput = "This is the use's input." }) {
   // Here for the user's input and feedback from OpenAI, please replace the following with the data in props
-  const userInput = "This is the user's input.";
+  // const userInput = "This is the user's input.";
   const feedback = {
     score: 9,
     feedback:
@@ -15,6 +16,10 @@ export default function Feedback() {
   const toggleOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <section className="block w-full">
@@ -36,6 +41,7 @@ export default function Feedback() {
           <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
             Feedback
           </h3>
+          <p>{userInput}</p>
           <div className="rounded-lg border border-gray-300 bg-white shadow-md">
             <h3 className="flex items-center justify-between w-full p-4">
               <span className="font-semibold">Your Score:</span>
@@ -78,10 +84,9 @@ export default function Feedback() {
           </div>
         </div>
         <div className="mt-8">
-          {/* Click to try practice again */}
-          <button type="button" className="btn-primary w-24">
-            Retry
-          </button>
+          <Link to="/" className="btn-primary w-24">
+            Back to Home
+          </Link>
         </div>
         <div className="mt-16 rounded-lg border border-gray-300 bg-purple-100 shadow-md">
           <h3 className="flex items-center justify-between w-full p-4">

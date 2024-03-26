@@ -1,13 +1,16 @@
 import React, { useRef, useState } from "react";
 import fixPic from "./Image/fixPic.jpeg";
 
-
-export default function ImageUnite() {
-
+export default function ImageUnite({ data }) {
   //useState will be use to update the image
   const [image_url, setImage_url] = useState("");
   //using useRef to reference the emelement n the webpage set as null, having as null mean that it does not point to anything yet.
   let inputRef = useRef(null);
+
+  // Check if error exists
+  const error = data[0]?.error;
+  // get the alt text for display
+  const imgAlt = error ? "Error" : data[0]?.word; // it works for now
 
   // funtion that will be generated when we click on the button
   const imageGenerator = async () => {
@@ -42,8 +45,6 @@ export default function ImageUnite() {
     // acceess to the first item in the array and to the url that will be show on the page
     setImage_url(data_array[0].url);
     // console.log(data);
-
-    
   };
 
   return (
