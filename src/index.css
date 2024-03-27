@@ -32,6 +32,7 @@ body {
 } */
 
 code {
+  @apply p-1 bg-purple-200 rounded;
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

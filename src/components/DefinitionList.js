@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
 
 const DefinitionList = ({ definition, display, children }) => {
   // Check if error exists
@@ -135,9 +134,6 @@ const DefinitionList = ({ definition, display, children }) => {
                   <div className="w-full mt-6 md:mt-0 md:w-1/2 p-4 bg-purple-50 rounded-lg flex flex-col gap-2 items-center">
                     {/* ImageUnite component is passed to DefinitionList component as children */}
                     {children}
-                    <button className="btn-primary">
-                      <Link to="/practice">Practice</Link>
-                    </button>
                   </div>
                 </div>
               </div>
