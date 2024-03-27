@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import fixPic from "../img/fixPic.jpeg";
 
 // Please define the props for this component
-export default function Practice({ onUserInput }) {
+export default function Practice({ onUserInput, data }) {
   const [userInput, setUserInput] = useState("");
   const navigate = useNavigate();
   // Here for the toggle buttons of the help section
   const [isOpen, setIsOpen] = useState([false, false]);
+  // Get the word from the data
+  const word = data[0]?.error ? "" : data[0]?.word;
+  // Get img url from local storage
+  let image_url = fixPic;
+  const imageData = localStorage.getItem(word);
+  if (imageData) {
+    const localJsonData = JSON.parse(imageData);
+    image_url = localJsonData.image_url;
+  }
   // Here for the key words and example sentence, please replace the following with the data in props
   const helpInfo = [
     {
@@ -51,7 +61,7 @@ export default function Practice({ onUserInput }) {
           {/* Here for AI generated image */}
           <div className="mt-4 max-w-lg mx-auto bg-white rounded-2xl p-4">
             <img
-              src="/intro.png"
+              src={image_url || fixPic}
               alt="AI-Generated"
               className="w-full h-auto"
             />

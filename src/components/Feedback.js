@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import fixPic from "../img/fixPic.jpeg";
 
 // Please define the props for this component
-export default function Feedback({ userInput = "This is the use's input." }) {
+export default function Feedback({
+  userInput = "This is the use's input.",
+  data,
+}) {
+  // Get the word from the data
+  const word = data[0]?.error ? "" : data[0]?.word;
+  // Get img url from local storage
+  let image_url = fixPic;
+  const imageData = localStorage.getItem(word);
+  if (imageData) {
+    const localJsonData = JSON.parse(imageData);
+    image_url = localJsonData.image_url;
+  }
   // Here for the user's input and feedback from OpenAI, please replace the following with the data in props
   // const userInput = "This is the user's input.";
   const feedback = {
@@ -31,7 +44,7 @@ export default function Feedback({ userInput = "This is the use's input." }) {
           {/* Here for AI generated image */}
           <div className="mt-4 max-w-lg mx-auto bg-white rounded-2xl p-4">
             <img
-              src="/intro.png"
+              src={image_url || fixPic}
               alt="AI-Generated"
               className="w-full h-auto"
             />

@@ -92,9 +92,12 @@ function Main() {
       />
       <Route
         path="practice"
-        element={<Practice onUserInput={handleUserInput} />}
+        element={<Practice onUserInput={handleUserInput} data={fetchData} />}
       />
-      <Route path="feedback" element={<Feedback userInput={userInput} />} />
+      <Route
+        path="feedback"
+        element={<Feedback userInput={userInput} data={fetchData} />}
+      />
       <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
   );
