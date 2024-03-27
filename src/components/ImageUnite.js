@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
 import fixPic from "./Image/fixPic.jpeg";
 
+
 export default function ImageUnite() {
-  const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+
   //useState will be use to update the image
   const [image_url, setImage_url] = useState("");
   //using useRef to reference the emelement n the webpage set as null, having as null mean that it does not point to anything yet.
@@ -21,7 +22,7 @@ export default function ImageUnite() {
         method: "POST",
         headers: {
           "content-Type": "application/json",
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
           "User-agent": "Chrome",
         },
         body: JSON.stringify({
@@ -33,12 +34,16 @@ export default function ImageUnite() {
         }),
       }
     );
+
     // return a promise, the data from the response body is stored in the variable data
     let data = await response.json();
-    // get the data property from the data object
+    // // get the data property from the data object
     let data_array = data.data;
     // acceess to the first item in the array and to the url that will be show on the page
     setImage_url(data_array[0].url);
+    // console.log(data);
+
+    
   };
 
   return (
