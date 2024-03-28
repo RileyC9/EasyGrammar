@@ -1,7 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import fixPic from "../img/fixPic.jpeg";
 
 // Please define the props for this component
-export default function Practice() {
+export default function Practice({ onUserInput, data }) {
+  const [userInput, setUserInput] = useState("");
+  const navigate = useNavigate();
+  // Here for the toggle buttons of the help section
+  const [isOpen, setIsOpen] = useState([false, false]);
+  // Get the word from the data
+  const word = data[0]?.error ? "" : data[0]?.word;
+  // Get img url from local storage
+  let image_url = fixPic;
+  const imageData = localStorage.getItem(word);
+  if (imageData) {
+    const localJsonData = JSON.parse(imageData);
+    image_url = localJsonData.image_url;
+  }
   // Here for the key words and example sentence, please replace the following with the data in props
   const helpInfo = [
     {
@@ -15,8 +30,19 @@ export default function Practice() {
     },
   ];
 
-  // Here for the toggle buttons of the help section
-  const [isOpen, setIsOpen] = useState([false, false]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleInputChange = (e) => {
+    setUserInput(e.target.value);
+  };
+
+  const handleInputSubmit = (e) => {
+    e.preventDefault();
+    onUserInput(userInput);
+    navigate("/feedback");
+  };
 
   const toggleOpen = (index) => {
     const newIsOpen = [...isOpen];
@@ -35,20 +61,26 @@ export default function Practice() {
           {/* Here for AI generated image */}
           <div className="mt-4 max-w-lg mx-auto bg-white rounded-2xl p-4">
             <img
-              src="/intro.png"
+              src={image_url || fixPic}
               alt="AI-Generated"
               className="w-full h-auto"
             />
           </div>
         </div>
+
         <div className="mt-8">
+          <Link to="/" className="btn-primary">
+            Back to Search
+          </Link>
           <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
             Your Answer:
           </h3>
           {/* Here for User input */}
-          <form className="w-full">
+          <form className="w-full" onSubmit={handleInputSubmit}>
             <div className="relative">
               <textarea
+                value={userInput}
+                onChange={handleInputChange}
                 type="search"
                 id="word-input"
                 className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
