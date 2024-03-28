@@ -6,9 +6,12 @@ export default function ImageUnite() {
 
   //useState will be use to update the image
   const [image_url, setImage_url] = useState("");
+  const [text, setText] = useState("");
+  const [spellCheckedText, setSpellCheckedText] = useState("")
+
+
   //using useRef to reference the emelement n the webpage set as null, having as null mean that it does not point to anything yet.
   let inputRef = useRef(null);
-
   // funtion that will be generated when we click on the button
   const imageGenerator = async () => {
     // this mean that if we don't add anything in the input field, it won't return anything
@@ -23,7 +26,7 @@ export default function ImageUnite() {
         headers: {
           "content-Type": "application/json",
           Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          "User-agent": "Chrome",
+        
         },
         body: JSON.stringify({
           // this will give the text return in the input field
@@ -42,9 +45,56 @@ export default function ImageUnite() {
     // acceess to the first item in the array and to the url that will be show on the page
     setImage_url(data_array[0].url);
     // console.log(data);
-
-    
   };
+  
+  // grammar checker start here 
+    const handleTextChange = (e) => {
+        setText(e.target.value);
+    };
+
+    const AIspellCheck = async () => {
+       
+        const response2 = await fetch(
+          "https://api.openai.com/v1/chat/completions",
+          {
+            // using POST to make a request to the server
+            method: "POST",
+            headers: {
+              "content-Type": "application/json",
+              Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+            
+            },
+            body: JSON.stringify({
+              model: "gpt-3.5-turbo",
+              messages: [
+                {
+                    role:'system',
+                    content: "you are a helful assistant who can correct spelling, grammatical and lexical errors"
+                },
+                {
+                    role:'user',
+                    content: `correct the spelling,grammatical and lexical errors in this text: ${text}`
+                },
+              ],
+              temperature: 0.7,
+              max_tokens:64,
+              top_p: 1
+              
+
+            }),
+          }
+        
+        );
+    
+        let data2 = await response2.json();
+        console.log(data2)
+        let data2_array = data2.choices;
+        setSpellCheckedText(data2_array[0].message.content);
+        
+
+        
+
+  }
 
   return (
     <>
@@ -65,6 +115,28 @@ export default function ImageUnite() {
       >
         Generate
       </button>
+
+    {/* grammar checker start here  */}
+      <div>
+        <textarea 
+            placeholder="describe the image here" 
+            cols={80} 
+            rows={15} 
+            value={text}
+            onChange={handleTextChange}
+        />
+      </div>
+
+      <div>
+      <button
+        onClick={() => {
+            AIspellCheck();
+        }}
+      >
+        check
+      </button>
+      </div>
+      <h3>{spellCheckedText}</h3>
     </>
   );
 }
