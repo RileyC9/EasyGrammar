@@ -8,6 +8,7 @@ import SearchInput from "./SearchInput.js";
 import ImageUnite from "./ImageUnite.js";
 import Practice from "./Practice.js";
 import Feedback from "./Feedback.js";
+import Help from "./Help.js";
 // import the components in the above section
 
 // main display goes here.
@@ -86,6 +87,7 @@ function Main() {
               <ImageUnite data={fetchData} />
             </DefinitionList>
             <SampleSentences data={fetchData} display={definitionListDisplay} />
+            <Help />
             <Contact />
           </>
         }
