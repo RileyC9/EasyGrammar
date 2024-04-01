@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const navLinks = [
-    { href: "/", label: "Home" },
+    { href: "home", label: "Home" },
     { href: "about", label: "About" },
     { href: "mailto:easygrammar193@gmail.com", label: "Contact" },
   ];
@@ -13,7 +13,7 @@ export default function Header() {
       <header className="sticky top-0 z-[999] bg-purple-50 border-gray-200 px-4 pt-4 pb-2.5 md:px-0 md:-mx-2">
         <nav className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
           <a
-            href="/"
+            href="home"
             className="flex items-center font-extrabold text-2xl text-gradient"
           >
             Easy Grammar

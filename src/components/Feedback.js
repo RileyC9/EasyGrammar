@@ -100,7 +100,7 @@ export default function Feedback({
           </div>
         </div>
         <div className="mt-8">
-          <Link to="/" className="btn-primary w-24">
+          <Link to="/home" className="btn-primary w-24">
             Back to Home
           </Link>
         </div>

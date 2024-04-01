@@ -41,7 +41,7 @@ export default function Practice({ onUserInput, data }) {
   const handleInputSubmit = (e) => {
     e.preventDefault();
     onUserInput(userInput);
-    navigate("/feedback");
+    navigate("/home/feedback");
   };
 
   const toggleOpen = (index) => {
@@ -69,7 +69,7 @@ export default function Practice({ onUserInput, data }) {
         </div>
 
         <div className="mt-8">
-          <Link to="/" className="btn-primary">
+          <Link to="/home" className="btn-primary">
             Back to Search
           </Link>
           <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
