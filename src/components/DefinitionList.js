@@ -147,8 +147,8 @@ const DefinitionList = ({ definition, display, children }) => {
         // if display control is false, show the following message
         <div className="mt-12 py-6 max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl text-gray-300">
-            Please enter a word and click Search to view the definition and
-            image of the word.
+            Please enter a word and click Search to view the definition and AI
+            generated image for the word.
           </h2>
         </div>
       )}

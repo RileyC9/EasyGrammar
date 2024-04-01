@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "about", label: "About" },
+    { href: "/home", label: "Home" },
+    { href: "/about", label: "About" },
     { href: "mailto:easygrammar193@gmail.com", label: "Contact" },
   ];
   return (
