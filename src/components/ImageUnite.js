@@ -11,6 +11,12 @@ export default function ImageUnite({ data }) {
   // Initialize state
   const [imageData, setImageData] = useState({});
 
+// <<<<<<< GrammarChecker
+//   //useState will be use to update the image
+//   const [image_url, setImage_url] = useState("");
+//   const [text, setText] = useState("");
+//   const [spellCheckedText, setSpellCheckedText] = useState("")
+
   // Update state with stored data when word changes
   useEffect(() => {
     const localData = localStorage.getItem(word);
@@ -103,6 +109,101 @@ export default function ImageUnite({ data }) {
     // // get the data property from the data object
     let res_data = res.data;
     // console.log(data);
+// <<<<<<< GrammarChecker
+//   };
+  
+//   // grammar checker start here 
+//     const handleTextChange = (e) => {
+//         setText(e.target.value);
+//     };
+
+//     const AIspellCheck = async () => {
+       
+//         const response2 = await fetch(
+//           "https://api.openai.com/v1/chat/completions",
+//           {
+//             // using POST to make a request to the server
+//             method: "POST",
+//             headers: {
+//               "content-Type": "application/json",
+//               Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+            
+//             },
+//             body: JSON.stringify({
+//               model: "gpt-3.5-turbo",
+//               messages: [
+//                 {
+//                     role:'system',
+//                     content: "you are a helful assistant who can correct spelling, grammatical and lexical errors"
+//                 },
+//                 {
+//                     role:'user',
+//                     content: `correct the spelling,grammatical and lexical errors in this text: ${text}`
+//                 },
+//               ],
+//               temperature: 0.7,
+//               max_tokens:64,
+//               top_p: 1
+              
+
+//             }),
+//           }
+        
+//         );
+    
+//         let data2 = await response2.json();
+//         console.log(data2)
+//         let data2_array = data2.choices;
+//         setSpellCheckedText(data2_array[0].message.content);
+        
+
+        
+
+//   }
+
+//   return (
+//     <>
+//       {/* using a ternary operator if image_url is true we show the default image if false we show the image provided by the OpenAI api */}
+//       <div>
+//         <img src={image_url === "" ? fixPic : image_url} alt="" />
+//       </div>
+//       <p>here is the image test</p>
+//       <input
+//         type="text"
+//         ref={inputRef}
+//         placeholder="describe what you want to see"
+//       />
+//       <button
+//         onClick={() => {
+//           imageGenerator();
+//         }}
+//       >
+//         Generate
+//       </button>
+
+//     {/* grammar checker start here  */}
+//       <div>
+//         <textarea 
+//             placeholder="describe the image here" 
+//             cols={80} 
+//             rows={15} 
+//             value={text}
+//             onChange={handleTextChange}
+//         />
+//       </div>
+
+//       <div>
+//       <button
+//         onClick={() => {
+//             AIspellCheck();
+//         }}
+//       >
+//         check
+//       </button>
+//       </div>
+//       <h3>{spellCheckedText}</h3>
+//     </>
+// =======
     if (res_data[0].url) {
       setImageData({
         word,
