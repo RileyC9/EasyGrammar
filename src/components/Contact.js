@@ -9,7 +9,12 @@ export default function Contact() {
       <p className="mb-4 text-gray-500 lg:text-lg dark:text-gray-400">
         Get in touch with us!
       </p>
-      <button type="button" className="btn-primary" onClick={handleContact}>
+      <button
+        type="button"
+        className="btn-primary"
+        onClick={handleContact}
+        title="Click to send an email"
+      >
         CONTACT
       </button>
     </div>

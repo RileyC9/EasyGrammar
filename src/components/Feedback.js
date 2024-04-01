@@ -49,12 +49,15 @@ export default function Feedback({
               className="w-full h-auto"
             />
           </div>
+          <p className="text-sm text-gray-400 mt-4">
+            Your work has been evaluated by OpenAI. Here is the feedback:
+          </p>
         </div>
         <div className="mt-8">
           <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
             Feedback
           </h3>
-          <p>{userInput}</p>
+          {/* <p>{userInput}</p> */}
           <div className="rounded-lg border border-gray-300 bg-white shadow-md">
             <h3 className="flex items-center justify-between w-full p-4">
               <span className="font-semibold">Your Score:</span>
