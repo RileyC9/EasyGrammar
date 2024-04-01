@@ -49,6 +49,7 @@ export default function SearchInput({ value, handleWord, wordSubmit }) {
             <button
               type="submit"
               className="absolute end-2.5 bottom-2.5 btn-primary"
+              title="Get definition and AI generated image"
             >
               Search
             </button>
