@@ -1,9 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import fixPic from "../img/fixPic.jpeg";
 
 // Please define the props for this component
-export default function Feedback() {
+export default function Feedback({
+  userInput = "This is the use's input.",
+  data,
+}) {
+  // Get the word from the data
+  const word = data[0]?.error ? "" : data[0]?.word;
+  // Get img url from local storage
+  let image_url = fixPic;
+  const imageData = localStorage.getItem(word);
+  if (imageData) {
+    const localJsonData = JSON.parse(imageData);
+    image_url = localJsonData.image_url;
+  }
   // Here for the user's input and feedback from OpenAI, please replace the following with the data in props
-  const userInput = "This is the user's input.";
+  // const userInput = "This is the user's input.";
   const feedback = {
     score: 9,
     feedback:
@@ -16,6 +30,10 @@ export default function Feedback() {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <section className="block w-full">
       <div className="mt-12 mx-4 md:mx-auto max-w-4xl">
@@ -26,7 +44,7 @@ export default function Feedback() {
           {/* Here for AI generated image */}
           <div className="mt-4 max-w-lg mx-auto bg-white rounded-2xl p-4">
             <img
-              src="/intro.png"
+              src={image_url || fixPic}
               alt="AI-Generated"
               className="w-full h-auto"
             />
@@ -36,6 +54,7 @@ export default function Feedback() {
           <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
             Feedback
           </h3>
+          <p>{userInput}</p>
           <div className="rounded-lg border border-gray-300 bg-white shadow-md">
             <h3 className="flex items-center justify-between w-full p-4">
               <span className="font-semibold">Your Score:</span>
@@ -78,10 +97,9 @@ export default function Feedback() {
           </div>
         </div>
         <div className="mt-8">
-          {/* Click to try practice again */}
-          <button type="button" className="btn-primary w-24">
-            Retry
-          </button>
+          <Link to="/" className="btn-primary w-24">
+            Back to Home
+          </Link>
         </div>
         <div className="mt-16 rounded-lg border border-gray-300 bg-purple-100 shadow-md">
           <h3 className="flex items-center justify-between w-full p-4">
