@@ -1,5 +1,6 @@
 import React from "react";
 
+// takes props from main.js contains fetched data (data) and display control (display)
 const SampleSentences = ({ data, display }) => {
   // Check if error exists
   const error = data?.[0]?.error;
@@ -12,7 +13,7 @@ const SampleSentences = ({ data, display }) => {
     // Going through the dictionary API to get only one definition
     data.slice(0, 1).forEach((element) =>
       element.meanings.forEach((set) => {
-        // Go through the fetched data to extract the sample sentences and store in exampleList
+        // Go through the fetched data to extract the sample sentences and push into exampleList array
         set.definitions.forEach((definition) =>
           definition.example
             ? exampleList.push(
@@ -31,7 +32,7 @@ const SampleSentences = ({ data, display }) => {
 
   return (
     <section className="block w-full">
-      {/* display the sample sentences if input is valid, no error and exampleList is not empty */}
+      {/* display the sample sentences if display control is true, no error and exampleList is not empty */}
       {display && !error && exampleList.length > 0 && (
         <div className="max-w-4xl mx-auto">
           {/* Sample sentence */}
