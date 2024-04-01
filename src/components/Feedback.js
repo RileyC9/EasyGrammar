@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import fixPic from "../img/fixPic.jpeg";
 
 // Please define the props for this component
-export default function Feedback({
-  userInput = "This is the use's input.",
-  data,
-}) {
+export default function Feedback({ userInput, data }) {
+  // Here for the spell checked text
+  const [spellCheckedText, setSpellCheckedText] = useState("");
+  // Here for the toggle buttons of the help section
+  const [isOpen, setIsOpen] = useState(true);
   // Get the word from the data
   const word = data[0]?.error ? "" : data[0]?.word;
   // Get img url from local storage
@@ -16,8 +17,7 @@ export default function Feedback({
     const localJsonData = JSON.parse(imageData);
     image_url = localJsonData.image_url;
   }
-  // Here for the user's input and feedback from OpenAI, please replace the following with the data in props
-  // const userInput = "This is the user's input.";
+  // Here for the user's input and feedback from OpenAI, please replace the following with the data from OpenAI
   const feedback = {
     score: 9,
     feedback:
@@ -25,17 +25,55 @@ export default function Feedback({
     exampleSentence: "This is an example sentence.",
   };
 
-  const [isOpen, setIsOpen] = useState(true);
+  useEffect(() => {
+    const AIspellCheck = async () => {
+      const response2 = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          // using POST to make a request to the server
+          method: "POST",
+          headers: {
+            "content-Type": "application/json",
+            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "you are a helful assistant who can correct spelling, grammatical and lexical errors",
+              },
+              {
+                role: "user",
+                content: `correct the spelling,grammatical and lexical errors in this text: ${userInput}`,
+              },
+            ],
+            temperature: 0.7,
+            max_tokens: 64,
+            top_p: 1,
+          }),
+        }
+      );
+
+      let data2 = await response2.json();
+      console.log(data2);
+      let data2_array = data2.choices;
+      setSpellCheckedText(data2_array[0].message.content);
+    };
+
+    AIspellCheck();
+    window.scrollTo(0, 0);
+  }, [userInput]);
+
   const toggleOpen = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <section className="block w-full">
+      <h3>Here is the user's input:{userInput}</h3>
+      <h3>Here is the spell checked text:{spellCheckedText}</h3>
       <div className="mt-12 mx-4 md:mx-auto max-w-4xl">
         <div>
           <h2 className="font-bold text-xl lg:text-2xl">
@@ -54,7 +92,7 @@ export default function Feedback({
           <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
             Feedback
           </h3>
-          <p>{userInput}</p>
+
           <div className="rounded-lg border border-gray-300 bg-white shadow-md">
             <h3 className="flex items-center justify-between w-full p-4">
               <span className="font-semibold">Your Score:</span>
