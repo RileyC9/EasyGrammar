@@ -130,7 +130,7 @@ export default function Feedback({ userInput, data }) {
               className={`p-5 border-t border-gray-300 bg-purple-50 overflow-hidden rounded-b-lg
                 ${isOpen ? "" : "hidden"}`}
             >
-              <p className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400">
+              <p data-testid="grammar-analysis-report" className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400">
                 {feedback.feedback}
               </p>
             </div>
