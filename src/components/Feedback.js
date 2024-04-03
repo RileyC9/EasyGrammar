@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import fixPic from "../img/fixPic.jpeg";
 
 // Please define the props for this component
 export default function Feedback({ userInput, data }) {
   // Here for the spell checked text
-  const [spellCheckedText, setSpellCheckedText] = useState("");
+  const [responseDisplay, setResponseDisplay] = useState("");
+  // Here for the grade from the user text
+  const [grade, setGrade] = useState("");
+  // Here for the explanation of the user text
+  const [explanation, setExplanation] = useState("");
   // Here for the toggle buttons of the help section
   const [isOpen, setIsOpen] = useState(true);
   // Get the word from the data
@@ -18,14 +22,16 @@ export default function Feedback({ userInput, data }) {
     image_url = localJsonData.image_url;
   }
   // Here for the user's input and feedback from OpenAI, please replace the following with the data from OpenAI
-  const feedback = {
-    score: 9,
-    feedback:
-      "You did a great job! Your sentence is clear and concise. However, you can improve it by using more descriptive words.",
-    exampleSentence: "This is an example sentence.",
-  };
+  // const feedback = {
+  //   score: 9,
+  //   feedback:
+  //     "You did a great job! Your sentence is clear and concise. However, you can improve it by using more descriptive words.",
+  //   exampleSentence: "This is an example sentence.",
+  // };
 
-  useEffect(() => {
+  // OpenAI API request documentation: https://platform.openai.com/examples/default-grammar?lang=curl
+  // fetching data with a POST request to OpenAI
+  
     const AIspellCheck = async () => {
       const response2 = await fetch(
         "https://api.openai.com/v1/chat/completions",
@@ -42,29 +48,56 @@ export default function Feedback({ userInput, data }) {
               {
                 role: "system",
                 content:
-                  "you are a helful assistant who can correct spelling, grammatical and lexical errors",
+                  "You are a helpful assistant who can correct spelling, grammatical, and lexical errors, and will provide a grade out of 10 based on the length, number of errors, and readability, while also explaining the changes and how to improve.",
               },
               {
                 role: "user",
-                content: `correct the spelling,grammatical and lexical errors in this text: ${userInput}`,
+                content: `Corrected text: in this text:${userInput}`,
+
               },
             ],
             temperature: 0.7,
-            max_tokens: 64,
+            max_tokens: 180,
             top_p: 1,
           }),
         }
       );
-
+      // get the information of the corrected text 
       let data2 = await response2.json();
-      console.log(data2);
-      let data2_array = data2.choices;
-      setSpellCheckedText(data2_array[0].message.content);
-    };
+      // console.log(data2);
+      let data2_array = data2.choices? data2.choices:[{message:{content:"Error: an error occured witht the server, please try again in few minutes."}}];
+      let responseArray = data2_array[0]? data2_array[0].message.content.split("\n"): ["error, no analysis"];
+      // setSpellCheckedText(data2_array[0].message.content);
 
-    AIspellCheck();
+      // extract grade
+      const gradeContent = data2_array[0].message.content;
+      // regular expression that will match the string grade follow by a space
+      const gradeRegex = /Grade:\s(\d+\/\d+)/;
+      const gradeMatch = gradeContent.match(gradeRegex);
+      //gradeMatch[1] is the grade value
+      if(gradeMatch && gradeMatch[1]){
+        setGrade(gradeMatch[1]);
+      }
+      // the respond is slipt into an array and filter the information that we do not want to show. 
+      setResponseDisplay(responseArray.filter(sentence => sentence.search(gradeRegex)).map(sentence => <li>{sentence}</li>));
+      console.log(responseDisplay);
+      
+      // extract explanation
+      const explanationRegex = /Explanation:(.*)/s;
+      const explanationMatch = gradeContent.match(explanationRegex);
+      if(explanationMatch && explanationMatch[1]){
+        setExplanation(explanationMatch[1].trim());
+      }
+
+    };
+    useEffect(() => {
+      AIspellCheck();
+    }, [])
+  
     window.scrollTo(0, 0);
-  }, [userInput]);
+  //  }, [userInput, responseDisplay]);
+
+   
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -72,8 +105,9 @@ export default function Feedback({ userInput, data }) {
 
   return (
     <section className="block w-full">
-      <h3>Here is the user's input:{userInput}</h3>
+      {/* <h3>Here is the user's input:{userInput}</h3>
       <h3>Here is the spell checked text:{spellCheckedText}</h3>
+      <h3>Explanation: {explanation}</h3>  */}
       <div className="mt-12 mx-4 md:mx-auto max-w-4xl">
         <div>
           <h2 className="font-bold text-xl lg:text-2xl">
@@ -99,8 +133,8 @@ export default function Feedback({ userInput, data }) {
             <h3 className="flex items-center justify-between w-full p-4">
               <span className="font-semibold">Your Score:</span>
               <div className="w-24 btn-primary">
-                {feedback.score}
-                <span className="text-gray-300">&nbsp;/&nbsp;10</span>
+                {/* {feedback.score}   */}{grade}
+                <span className="text-gray-300"></span>
               </div>
             </h3>
             <h3>
@@ -131,7 +165,7 @@ export default function Feedback({ userInput, data }) {
                 ${isOpen ? "" : "hidden"}`}
             >
               <p className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400">
-                {feedback.feedback}
+                {/* {feedback.feedback} */} {explanation}
               </p>
             </div>
           </div>
@@ -155,7 +189,11 @@ export default function Feedback({ userInput, data }) {
           </h3>
           <div className="p-5 border-t border-gray-300 bg-purple-50 overflow-hidden rounded-b-lg">
             <p className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400">
-              {feedback.exampleSentence}
+              {/* {feedback.exampleSentence} */}
+              <ul>
+              {responseDisplay} 
+              </ul>
+              
             </p>
           </div>
         </div>
