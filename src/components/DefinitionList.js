@@ -132,8 +132,8 @@ const DefinitionList = ({ definition, display, children }) => {
                     {defList}
                   </ul>
                   <div className="w-full mt-6 md:mt-0 md:w-1/2 p-4 bg-purple-50 rounded-lg flex flex-col gap-2 items-center">
+                    {/* ImageUnite component is passed to DefinitionList component as children */}
                     {children}
-                    <button className="btn-primary">Practice</button>
                   </div>
                 </div>
               </div>

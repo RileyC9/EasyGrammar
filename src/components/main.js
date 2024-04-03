@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import SampleSentences from "./SampleSentence.js";
 import DefinitionList from "./DefinitionList";
-import Header from "./Header.js";
-import Footer from "./Footer.js";
 import Contact from "./Contact.js";
 import SearchInput from "./SearchInput.js";
 import ImageUnite from "./ImageUnite.js";
-
+import Practice from "./Practice.js";
+import Feedback from "./Feedback.js";
 // import the components in the above section
 
 // main display goes here.
@@ -18,23 +18,19 @@ function Main() {
   const [word, setWord] = useState("");
   const [fetchData, setFetchData] = useState([]);
   const [definitionListDisplay, setDefinitionListDisplay] = useState(false);
-  const [sampleSentenceDisplay, setSampleSentenceDisplay] = useState(false);
+  const [userInput, setUserInput] = useState("");
   //Update word useState hook, everytime userinput
 
   function handleWord(e) {
     setWord(e.target.value);
-    // if (e.target.value === "" && e.key === "Enter") {
-    //   setDefinitionListDisplay(false);
-    // }
     if (e.target.value === "") {
       setDefinitionListDisplay(false);
-      setSampleSentenceDisplay(false);
     }
   }
+
   // When Search button is click, fetch data from free dictionary api of the word in the form.
   // Save the definition fetched into fetch data useState hook
-  // or display error if word is not
-
+  // or display error if word is not found
   const wordSubmit = async (e) => {
     e.preventDefault();
     // version 2 of empty input field
@@ -47,7 +43,6 @@ function Main() {
       .then((res) => {
         setFetchData(res.data);
         setDefinitionListDisplay(true);
-        setSampleSentenceDisplay(true);
       })
       .catch((error) => {
         console.error(
@@ -57,7 +52,6 @@ function Main() {
         // set error message if word not found
         setFetchData([{ error: "Word not found" }]);
         setDefinitionListDisplay(true);
-        setSampleSentenceDisplay(true);
       });
     // version 2 of empty input field
     // }
@@ -68,26 +62,44 @@ function Main() {
     console.log(fetchData);
   }, [fetchData]);
 
+  // function to handle the user input in Practice component
+  const handleUserInput = (input) => {
+    setUserInput(input);
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      {/* <input onChange={handleWord} val={word} />
-      <button onClick={wordSubmit}>click here</button> */}
-      <SearchInput
-        value={word}
-        handleWord={handleWord}
-        wordSubmit={wordSubmit}
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <SearchInput
+              value={word}
+              handleWord={handleWord}
+              wordSubmit={wordSubmit}
+            />
+            <DefinitionList
+              definition={fetchData}
+              display={definitionListDisplay}
+            >
+              {/* Here for AI-Generated image */}
+              <ImageUnite data={fetchData} />
+            </DefinitionList>
+            <SampleSentences data={fetchData} display={definitionListDisplay} />
+            <Contact />
+          </>
+        }
       />
-      <DefinitionList definition={fetchData} display={definitionListDisplay}>
-        {/* Here for AI-Generated image */}
-        <img src="/intro.png" alt="intro" />
-      </DefinitionList>
-      <SampleSentences data={fetchData} display={sampleSentenceDisplay} />
-      <Contact />
-      <Footer />
-      {/* below is for testing purpose  */}
-      <ImageUnite />
-    </div>
+      <Route
+        path="practice"
+        element={<Practice onUserInput={handleUserInput} data={fetchData} />}
+      />
+      <Route
+        path="feedback"
+        element={<Feedback userInput={userInput} data={fetchData} />}
+      />
+      <Route path="*" element={<h1>404 Not Found</h1>} />
+    </Routes>
   );
 }
 

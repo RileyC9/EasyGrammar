@@ -5,9 +5,12 @@ import SearchInput from "./components/SearchInput";
 import DefinitionList from "./components/DefinitionList";
 import SampleSentences from "./components/SampleSentence";
 import ImageUnite from "./components/ImageUnite";
-import fixPic from "./components/Image/fixPic.jpeg";
+// import fixPic from "./components/Image/fixPic.jpeg";
+import Feedback from "./components/Feedback";
+import { Route, MemoryRouter, Routes } from "react-router-dom";
 
-// testing SearchInput feature
+/* SearchInput feature */
+// Unit Test 1
 // test to find if the search button exists in the SearchInput component
 test('renders a search button', () => {
   render(<SearchInput />);
@@ -19,6 +22,7 @@ test('renders a search button', () => {
   expect(searchButton).toBeInTheDocument();
 });
 
+// unit test 2
 // test to find if the text input field exists in the SearchInput component
 test('renders a search input field', () => {
   render(<SearchInput />);
@@ -29,11 +33,13 @@ test('renders a search input field', () => {
   // Assert that the search input field exists
   expect(searchInput).toBeInTheDocument();
 });
+/* End of Search input testes */
 
- // testing DefinitionList feature
+/* Definition List feature */
+ // unit test for Renders definition list if there is no error
 describe("DefinitionList component", () => {
 
-  // Test case: Renders definition list if there is no error
+  // Test case: mock data
   test("renders definition list if there is no error", () => {
 
     // Mock data for a successful fetch response
@@ -84,8 +90,12 @@ describe("DefinitionList component", () => {
 
     expect(errorMessage).toBeInTheDocument();
   });
+});
+/* End of Definition list Feature */
 
-  // Test case: testing audio button feature
+/* Audio Phoenetic feature */
+// Test case: testing audio button feature
+  describe("Audio component", () => {
   test('renders audio button if there is an audio link', () => {
     // Render the DefinitionList component with a sample definition containing an audio link
     render(
@@ -122,7 +132,7 @@ describe("DefinitionList component", () => {
 
   // Test case: Renders audio button even if there is an error or no audio link fetched
   test('renders audio button even if there is an error or no audio link fetched', () => {
-    // Render the DefinitionList component with an error definition
+    // Render the DefinitionList component with an error definition because audio button is inside definition list component
     render(
       <DefinitionList
         definition={[
@@ -139,10 +149,10 @@ describe("DefinitionList component", () => {
   });
 });
 
-// testing SampleSentence feature 
+/*SampleSentence feature */
 describe("SampleSentences component", () => {
 
-  // test to check if the component renders correctly with fetched data
+  // Test case: check if the Sample sentence component renders correctly with fetched data
   test("renders correctly with fetched data", () => {
 
     //Sample data with fetched data containing a sample sentence 
@@ -170,7 +180,7 @@ describe("SampleSentences component", () => {
     expect(getByText(/This is a sample sentence./i)).toBeInTheDocument();
   });
 
-  // Test to check if the component does not render with a bad search input
+  // Test case: Check if the component does not render with a bad search input
   test("does not render with bad search input", () => {
 
     // Sample data with bad search input
@@ -189,41 +199,72 @@ describe("SampleSentences component", () => {
     expect(queryByText(/Usage Examples/i)).toBeNull();
     expect(queryByText(/This is a sample sentence./i)).toBeNull();
   });
+});
+/* End of Sample Sentence feature */
 
-  describe('Grammar Mistake Identification Feature', () => {
+/* Grammar analysis feature */
+describe('Grammar Analysis Feature', () => {
+  // Test case: Ensure that the component renders the grammar analysis report
+  const definition = [
+    {
+      word: "example",
+      meanings: [
+        {
+          definitions: [{ definition: "a thing characteristic of its kind" }],
+        },
+      ],
+      phonetics: [{ text: "/ɪɡˈzæmpəl/", audio: "example_audio.mp3" }],
+    },
+  ];
+  test("Render Grammar Analysis Report", async () => {
+    // Render the component
+    const { getByTestId } = render(
+    <MemoryRouter initialEntries={["/feedback"]}>
+      <Routes>
+        <Route
+          path="/feedback"
+          element={<Feedback userInput={"Helo, My nam were Rav"} data={definition} />}
+        />
+      </Routes>
+    </MemoryRouter>);
 
-    // Test to ensure that the component renders the grammar analysis report
-    test('Render Grammar Analysis Report', async () => {
-      // Render the component
-      const { getByTestId } = render(<ImageUnite />);
-  
-      // Wait for the report to be displayed
-      await waitFor(() => {
+    // Wait for the report to be displayed
+    await waitFor(() => {
 
-        // Expect an element with the 'grammar-analysis-report' data-testid attribute to be in the component
-        expect(getByTestId('grammar-analysis-report')).toBeInTheDocument();
-      });
+      const grammarAnalysisReport = getByTestId('grammar-analysis-report');
+      
+
+      // Expect an element with the 'grammar-analysis-report' data-testid attribute to be in the component
+      expect(grammarAnalysisReport).toBeInTheDocument();
     });
-  
-    // Test to ensure that the component fetches and stores data correctly
-    test('Fetch and Store Data', async () => {
+  });
 
-      // Mock the fetch request to return sample data
-      global.fetch = jest.fn(() =>
-        Promise.resolve({
-          json: () => Promise.resolve({ /* Sample data */ }),
-        })
-      );
-  
-      // Render the component
-      const { grammarAnalysis } = render(<ImageUnite />);
-  
-      // Wait for data to be fetched and stored
-      await waitFor(() => {
+  // Test case:Ensure that the component fetches and stores data correctly
+  test('Fetch and Store Data', async () => {
+    
+    // Mock the fetch request to return sample data
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ /* Sample data */ }),
+      })
+    );
 
-        // Expect 'grammarAnalysis' to be equal to the expected data
-        expect(grammarAnalysis).toEqual(/* Expected data */);
-      });
+    // Render the component
+    // const { grammarAnalysis } = render(<Feedback userInput={"helo, my nam were Rav."} data={definition}/>);
+      const { grammarAnalysis } = render(
+      <MemoryRouter initialEntries={["/feedback"]}>
+        <Routes>
+          <Route
+            path="/feedback"
+            element={<Feedback userInput={"Helo, My nam were Rav"} data={definition} />}
+          />
+        </Routes>
+      </MemoryRouter>)
+    // Wait for data to be fetched and stored
+    await waitFor(() => {
+
+      // Expect 'grammarAnalysis' to be equal to the expected data
+      expect(grammarAnalysis).toEqual(/* Expected data */);
     });
   });
 });
