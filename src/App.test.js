@@ -1,9 +1,11 @@
 import React from "react";
-import { getByTestId, render, screen } from "@testing-library/react";
+import { getByTestId, render, screen, waitFor, getByText, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SearchInput from "./components/SearchInput";
 import DefinitionList from "./components/DefinitionList";
 import SampleSentences from "./components/SampleSentence";
+import ImageUnite from "./components/ImageUnite";
+import fixPic from "./components/Image/fixPic.jpeg";
 
 // testing SearchInput feature
 // test to find if the search button exists in the SearchInput component
@@ -186,5 +188,42 @@ describe("SampleSentences component", () => {
     // Assert that neither the "Usage Examples" title nor the sample sentence is rendered
     expect(queryByText(/Usage Examples/i)).toBeNull();
     expect(queryByText(/This is a sample sentence./i)).toBeNull();
+  });
+
+  describe('Grammar Mistake Identification Feature', () => {
+
+    // Test to ensure that the component renders the grammar analysis report
+    test('Render Grammar Analysis Report', async () => {
+      // Render the component
+      const { getByTestId } = render(<ImageUnite />);
+  
+      // Wait for the report to be displayed
+      await waitFor(() => {
+
+        // Expect an element with the 'grammar-analysis-report' data-testid attribute to be in the component
+        expect(getByTestId('grammar-analysis-report')).toBeInTheDocument();
+      });
+    });
+  
+    // Test to ensure that the component fetches and stores data correctly
+    test('Fetch and Store Data', async () => {
+
+      // Mock the fetch request to return sample data
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ /* Sample data */ }),
+        })
+      );
+  
+      // Render the component
+      const { grammarAnalysis } = render(<ImageUnite />);
+  
+      // Wait for data to be fetched and stored
+      await waitFor(() => {
+
+        // Expect 'grammarAnalysis' to be equal to the expected data
+        expect(grammarAnalysis).toEqual(/* Expected data */);
+      });
+    });
   });
 });

@@ -136,7 +136,7 @@ export default function ImageUnite() {
         check
       </button>
       </div>
-      <h3>{spellCheckedText}</h3>
+      <h3 data-testid="grammar-analysis-report">{spellCheckedText}</h3>
     </>
   );
 }
