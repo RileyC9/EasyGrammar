@@ -16,6 +16,7 @@ export default function Feedback({ userInput, data }) {
   const word = data[0]?.error ? "" : data[0]?.word;
   // Get img url from local storage
   let image_url = fixPic;
+  let uniqueID = 0;
   const imageData = localStorage.getItem(word);
   if (imageData) {
     const localJsonData = JSON.parse(imageData);
@@ -79,9 +80,9 @@ export default function Feedback({ userInput, data }) {
         setGrade(gradeMatch[1]);
       }
       // the respond is slipt into an array and filter the information that we do not want to show. 
-      setResponseDisplay(responseArray.filter(sentence => sentence.search(gradeRegex)).map(sentence => <li>{sentence}</li>));
+      setResponseDisplay(responseArray.filter(sentence => sentence.search(gradeRegex)).map(sentence => <li id= {uniqueID++}>{sentence}</li>));
       console.log(responseDisplay);
-      
+
       // extract explanation
       const explanationRegex = /Explanation:(.*)/s;
       const explanationMatch = gradeContent.match(explanationRegex);
