@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import fixPic from "../img/fixPic.jpeg";
-import images from "../img/images.jpeg";
 import { Link } from "react-router-dom";
 
 export default function ImageUnite({ data }) {
