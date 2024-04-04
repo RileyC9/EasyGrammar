@@ -22,14 +22,6 @@ export default function Feedback({ userInput, data }) {
     const localJsonData = JSON.parse(imageData);
     image_url = localJsonData.image_url;
   }
-  // Here for the user's input and feedback from OpenAI, please replace the following with the data from OpenAI
-  // const feedback = {
-  //   score: 9,
-  //   feedback:
-  //     "You did a great job! Your sentence is clear and concise. However, you can improve it by using more descriptive words.",
-  //   exampleSentence: "This is an example sentence.",
-  // };
-
   // OpenAI API request documentation: https://platform.openai.com/examples/default-grammar?lang=curl
   // fetching data with a POST request to OpenAI
   useEffect(() => {
@@ -54,7 +46,6 @@ export default function Feedback({ userInput, data }) {
               {
                 role: "user",
                 content: `Corrected text: in this text:${userInput}`,
-
               },
             ],
             temperature: 0.7,
@@ -63,11 +54,22 @@ export default function Feedback({ userInput, data }) {
           }),
         }
       );
-      // get the information of the corrected text 
+      // get the information of the corrected text
       let data2 = await response2.json();
       console.log(data2);
-      let data2_array = data2.choices? data2.choices:[{message:{content:"Error: an error occured witht the server, please try again in few minutes."}}];
-      let responseArray = data2_array[0]? data2_array[0].message.content.split("\n"): ["error, no analysis"];
+      let data2_array = data2.choices
+        ? data2.choices
+        : [
+            {
+              message: {
+                content:
+                  "Error: an error occured witht the server, please try again in few minutes.",
+              },
+            },
+          ];
+      let responseArray = data2_array[0]
+        ? data2_array[0].message.content.split("\n")
+        : ["error, no analysis"];
       // setSpellCheckedText(data2_array[0].message.content);
 
       // extract grade
@@ -76,33 +78,36 @@ export default function Feedback({ userInput, data }) {
       const gradeRegex = /Grade:\s(\d+\/\d+)/;
       const gradeMatch = gradeContent.match(gradeRegex);
       //gradeMatch[1] is the grade value
-      if(gradeMatch && gradeMatch[1]){
+      if (gradeMatch && gradeMatch[1]) {
         setGrade(gradeMatch[1]);
       }
-      // the respond is slipt into an array and filter the information that we do not want to show. 
+      // the respond is slipt into an array and filter the information that we do not want to show.
       // setResponseDisplay(responseArray.filter(sentence => sentence.search(gradeRegex).map(sentence => <li id={index++}>{sentence}</li>)));
-      setResponseDisplay(responseArray.filter(sentence => sentence.search(gradeRegex)).map(sentence => "\n"+sentence));
+      setResponseDisplay(
+        responseArray
+          .filter((sentence) => sentence.search(gradeRegex))
+          .map((sentence) => "\n" + sentence)
+      );
 
       // console.log(responseDisplay);
 
       // extract explanation
       const explanationRegex = /Explanation:(.*)/s;
       const explanationMatch = gradeContent.match(explanationRegex);
-      if(explanationMatch && explanationMatch[1]){
+      if (explanationMatch && explanationMatch[1]) {
         setExplanation(explanationMatch[1].trim());
       }
-
     };
-   
-    AIspellCheck()
-  },[userInput]);
+
+    AIspellCheck();
+  }, [userInput]);
   // let finalDisplay = [];
   // responseDisplay.forEach
-  let finalDisplay = responseDisplay.map(sentence => <li key={index++}>{sentence}</li>)
-    // window.scrollTo(0, 0);
+  let finalDisplay = responseDisplay.map((sentence) => (
+    <li key={index++}>{sentence}</li>
+  ));
+  // window.scrollTo(0, 0);
   //  }, [userInput, responseDisplay]);
-
-   
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -110,9 +115,6 @@ export default function Feedback({ userInput, data }) {
 
   return (
     <section className="block w-full">
-      {/* <h3>Here is the user's input:{userInput}</h3>
-      <h3>Here is the spell checked text:{spellCheckedText}</h3>
-      <h3>Explanation: {explanation}</h3>  */}
       <div className="mt-12 mx-4 md:mx-auto max-w-4xl">
         <div>
           <h2 className="font-bold text-xl lg:text-2xl">
@@ -137,10 +139,7 @@ export default function Feedback({ userInput, data }) {
           <div className="rounded-lg border border-gray-300 bg-white shadow-md">
             <h3 className="flex items-center justify-between w-full p-4">
               <span className="font-semibold">Your Score:</span>
-              <div className="w-24 btn-primary">
-                {/* {feedback.score}   */}{grade}
-                <span className="text-gray-300"></span>
-              </div>
+              {grade && <div className="w-24 btn-primary">{grade}</div>}
             </h3>
             <h3>
               <button
@@ -170,7 +169,7 @@ export default function Feedback({ userInput, data }) {
                 ${isOpen ? "" : "hidden"}`}
             >
               <p className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400">
-                {/* {feedback.feedback} */} {explanation}
+                {explanation}
               </p>
             </div>
           </div>
@@ -193,14 +192,13 @@ export default function Feedback({ userInput, data }) {
             <span className="font-semibold">Example Answer:</span>
           </h3>
           <div className="p-5 border-t border-gray-300 bg-purple-50 overflow-hidden rounded-b-lg">
-            <p className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400">
-              {/* {feedback.exampleSentence} */}
-              {/* <ul key={index++}> */}
-              <ul key={index++} style={{listStyleType:'none',padding:1 }}>
-              {finalDisplay} 
-              </ul>
-              
-            </p>
+            <ul
+              key={index++}
+              style={{ listStyleType: "none", padding: 1 }}
+              className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400"
+            >
+              {finalDisplay}
+            </ul>
           </div>
         </div>
       </div>
