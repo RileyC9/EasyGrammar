@@ -69,35 +69,35 @@ export default function ImageUnite({ data }) {
     if (error || !word) {
       return 0;
     }
-    // const response = await fetch(
-    //   "https://api.openai.com/v1/images/generations",
-    //   {
-    //     // using POST to make a request to the server
-    //     method: "POST",
-    //     headers: {
-    //       "content-Type": "application/json",
-    //       Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-    //       "User-agent": "Chrome",
-    //     },
-    //     body: JSON.stringify({
-    //       // this will give the text return in the input field
-    //       prompt: prompt,
-    //       // 1 because we want only one image
-    //       n: 1,
-    //       size: "512x512",
-    //     }),
-    //   }
-    // );
-    // Fake data for testing
-    const response = {
-      json: async () => ({
-        data: [
-          {
-            url: images,
-          },
-        ],
-      }),
-    };
+    const response = await fetch(
+      "https://api.openai.com/v1/images/generations",
+      {
+        // using POST to make a request to the server
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          "User-agent": "Chrome",
+        },
+        body: JSON.stringify({
+          // this will give the text return in the input field
+          prompt: word,
+          // 1 because we want only one image
+          n: 1,
+          size: "512x512",
+        }),
+      }
+    );
+    // // Fake data for testing
+    // const response = {
+    //   json: async () => ({
+    //     data: [
+    //       {
+    //         url: images,
+    //       },
+    //     ],
+    //   }),
+    // };
 
     // return a promise, the data from the response body is stored in the variable data
     let res = await response.json();

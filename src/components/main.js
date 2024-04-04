@@ -11,7 +11,11 @@ import Feedback from "./Feedback.js";
 import Help from "./Help.js";
 // import the components in the above section
 
-// main display goes here.
+/* main display goes here. 
+Fetch data from Free Dictionary API and store the needed data into fetchData useState hook.
+Fetch response from OpenAI API to get Grammar analysis and evaluation of the user's description of the image.
+Pass the response to the display component respectively.
+*/
 
 // add in the components and conditionally rendering the content to user
 function Main() {
@@ -20,8 +24,12 @@ function Main() {
   const [fetchData, setFetchData] = useState([]);
   const [definitionListDisplay, setDefinitionListDisplay] = useState(false);
   const [userInput, setUserInput] = useState("");
-  //Update word useState hook, everytime userinput
+  
+  /* 
+  When user input any text in the search field, the input will be stored in the word useState hook
 
+  If the search field is empty, it will set the definition list component display to be false
+  */
   function handleWord(e) {
     setWord(e.target.value);
     if (e.target.value === "") {
@@ -29,15 +37,13 @@ function Main() {
     }
   }
 
-  // When Search button is click, fetch data from free dictionary api of the word in the form.
-  // Save the definition fetched into fetch data useState hook
-  // or display error if word is not found
+  /* 
+  When Search button is click, fetch data from free dictionary api of the word in the form.
+  Save the definition fetched into fetchData useState hook or display error if word is not found
+  set DefinitionList component display to true
+  */
   const wordSubmit = async (e) => {
     e.preventDefault();
-    // version 2 of empty input field
-    // if (word === "") {
-    //   setDefinitionListDisplay(false);
-    // } else {
     console.log(word);
     await axios
       .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
@@ -46,6 +52,7 @@ function Main() {
         setDefinitionListDisplay(true);
       })
       .catch((error) => {
+        // Display a customized message on console
         console.error(
           "Error fetching from the word: " + word + ".\n Error: ",
           error
@@ -54,11 +61,8 @@ function Main() {
         setFetchData([{ error: "Word not found" }]);
         setDefinitionListDisplay(true);
       });
-    // version 2 of empty input field
-    // }
   };
   // re-render the page when word definition is updated
-  // let result;
   useEffect(() => {
     console.log(fetchData);
   }, [fetchData]);
@@ -69,29 +73,37 @@ function Main() {
   };
 
   return (
+    /* Showing different content based on the pages*/
     <Routes>
+      {/* Main page */}
+      {/* Search bar, definitions, sample sentences, audio button, and AI generated image */}
       <Route
         path="/"
         element={
           <>
+          {/* Search bar */}
             <SearchInput
               value={word}
               handleWord={handleWord}
               wordSubmit={wordSubmit}
             />
+            {/* Display the definition */}
             <DefinitionList
               definition={fetchData}
               display={definitionListDisplay}
             >
-              {/* Here for AI-Generated image */}
+              {/* Display the AI generated image */}
               <ImageUnite data={fetchData} />
             </DefinitionList>
+            {/* Display the sample sentences */}
             <SampleSentences data={fetchData} display={definitionListDisplay} />
             <Help />
             <Contact />
           </>
         }
       />
+      {/* Practice page */}
+      {/* Ai generated image, description text field, grammar analysis, and description evaluation */}
       <Route
         path="/practice"
         element={<Practice onUserInput={handleUserInput} data={fetchData} />}
