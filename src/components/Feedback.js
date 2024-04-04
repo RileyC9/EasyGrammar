@@ -5,7 +5,7 @@ import fixPic from "../img/fixPic.jpeg";
 // Please define the props for this component
 export default function Feedback({ userInput, data }) {
   // Here for the spell checked text
-  const [responseDisplay, setResponseDisplay] = useState("");
+  const [responseDisplay, setResponseDisplay] = useState([]);
   // Here for the grade from the user text
   const [grade, setGrade] = useState("");
   // Here for the explanation of the user text
@@ -16,7 +16,7 @@ export default function Feedback({ userInput, data }) {
   const word = data[0]?.error ? "" : data[0]?.word;
   // Get img url from local storage
   let image_url = fixPic;
-  let uniqueID = 0;
+  let index = 0;
   const imageData = localStorage.getItem(word);
   if (imageData) {
     const localJsonData = JSON.parse(imageData);
@@ -32,7 +32,7 @@ export default function Feedback({ userInput, data }) {
 
   // OpenAI API request documentation: https://platform.openai.com/examples/default-grammar?lang=curl
   // fetching data with a POST request to OpenAI
-  
+  useEffect(() => {
     const AIspellCheck = async () => {
       const response2 = await fetch(
         "https://api.openai.com/v1/chat/completions",
@@ -65,7 +65,7 @@ export default function Feedback({ userInput, data }) {
       );
       // get the information of the corrected text 
       let data2 = await response2.json();
-      // console.log(data2);
+      console.log(data2);
       let data2_array = data2.choices? data2.choices:[{message:{content:"Error: an error occured witht the server, please try again in few minutes."}}];
       let responseArray = data2_array[0]? data2_array[0].message.content.split("\n"): ["error, no analysis"];
       // setSpellCheckedText(data2_array[0].message.content);
@@ -80,8 +80,10 @@ export default function Feedback({ userInput, data }) {
         setGrade(gradeMatch[1]);
       }
       // the respond is slipt into an array and filter the information that we do not want to show. 
-      setResponseDisplay(responseArray.filter(sentence => sentence.search(gradeRegex)).map(sentence => <li id= {uniqueID++}>{sentence}</li>));
-      console.log(responseDisplay);
+      // setResponseDisplay(responseArray.filter(sentence => sentence.search(gradeRegex).map(sentence => <li id={index++}>{sentence}</li>)));
+      setResponseDisplay(responseArray.filter(sentence => sentence.search(gradeRegex)).map(sentence => "\n"+sentence));
+
+      // console.log(responseDisplay);
 
       // extract explanation
       const explanationRegex = /Explanation:(.*)/s;
@@ -91,11 +93,13 @@ export default function Feedback({ userInput, data }) {
       }
 
     };
-    useEffect(() => {
-      AIspellCheck();
-    }, [])
-  
-    window.scrollTo(0, 0);
+   
+    AIspellCheck()
+  },[userInput]);
+  // let finalDisplay = [];
+  // responseDisplay.forEach
+  let finalDisplay = responseDisplay.map(sentence => <li key={index++}>{sentence}</li>)
+    // window.scrollTo(0, 0);
   //  }, [userInput, responseDisplay]);
 
    
@@ -191,8 +195,9 @@ export default function Feedback({ userInput, data }) {
           <div className="p-5 border-t border-gray-300 bg-purple-50 overflow-hidden rounded-b-lg">
             <p className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400">
               {/* {feedback.exampleSentence} */}
-              <ul>
-              {responseDisplay} 
+              {/* <ul key={index++}> */}
+              <ul key={index++} style={{listStyleType:'none',padding:1 }}>
+              {finalDisplay} 
               </ul>
               
             </p>
