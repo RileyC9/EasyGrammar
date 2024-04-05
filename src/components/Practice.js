@@ -6,8 +6,6 @@ import fixPic from "../img/fixPic.jpeg";
 export default function Practice({ onUserInput, data }) {
   const [userInput, setUserInput] = useState("");
   const navigate = useNavigate();
-  // Here for the toggle buttons of the help section
-  const [isOpen, setIsOpen] = useState([false, false]);
   // Get the word from the data
   const word = data[0]?.error ? "" : data[0]?.word;
   // Get img url from local storage
@@ -17,19 +15,8 @@ export default function Practice({ onUserInput, data }) {
     const localJsonData = JSON.parse(imageData);
     image_url = localJsonData.image_url;
   }
-  // Here for the key words and example sentence, please replace the following with the data in props
-  const helpInfo = [
-    {
-      title: "Key Words",
-      content: "Here are some key words that you can use in your sentence:",
-    },
-    {
-      title: "Example Sentence",
-      content:
-        "Here is an example sentence that you can use as a reference for your answer:",
-    },
-  ];
 
+  // Scroll to top when the page is loaded
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -42,12 +29,6 @@ export default function Practice({ onUserInput, data }) {
     e.preventDefault();
     onUserInput(userInput);
     navigate("/home/feedback");
-  };
-
-  const toggleOpen = (index) => {
-    const newIsOpen = [...isOpen];
-    newIsOpen[index] = !newIsOpen[index];
-    setIsOpen(newIsOpen);
   };
 
   return (
@@ -67,12 +48,8 @@ export default function Practice({ onUserInput, data }) {
             />
           </div>
         </div>
-
         <div className="mt-8">
-          <Link to="/home" className="btn-primary">
-            Back to Search
-          </Link>
-          <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
+          <h3 className="font-bold text-left text-lg lg:text-xl mb-4">
             Your Answer:
           </h3>
           {/* Here for User input */}
@@ -88,63 +65,25 @@ export default function Practice({ onUserInput, data }) {
                 rows={6}
                 required
               />
-              <button
-                type="submit"
-                className="absolute end-2.5 bottom-2.5 btn-primary"
-                title="Submit to get feedback from OpenAI"
-              >
-                Submit
-              </button>
             </div>
+            <button
+              type="submit"
+              className="btn-primary mt-4"
+              title="Submit to get feedback from OpenAI"
+            >
+              Check Your Answer
+            </button>
           </form>
         </div>
-        <div className="mt-8">
-          <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
-            Need Help?
-          </h3>
-          <div className="rounded-lg border border-gray-300 bg-purple-100 shadow-md">
-            {helpInfo.map((info, index) => (
-              <div key={info.title}>
-                <h3>
-                  <button
-                    type="button"
-                    onClick={() => toggleOpen(index)}
-                    className={`flex items-center justify-between w-full p-4 rtl:text-right ${
-                      index === 1 ? "border-t border-gray-300" : ""
-                    }`}
-                  >
-                    <span className="font-semibold">{info.title}</span>
-                    <svg
-                      className={`w-3 h-3 shrink-0 ${
-                        isOpen[index] ? "" : "rotate-180"
-                      }`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 10 6"
-                    >
-                      <path
-                        stroke="#d1d5db"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 5 5 1 1 5"
-                      />
-                    </svg>
-                  </button>
-                </h3>
-                <div
-                  className={`p-5 border-t border-gray-300 bg-purple-50 overflow-hidden
-                ${isOpen[index] ? "" : "hidden"}
-                ${index === 1 ? "rounded-b-lg" : ""}`}
-                >
-                  <p className="mx-4 mb-2 text-left text-gray-500 dark:text-gray-400">
-                    {info.content}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <p className="mt-8 text-sm text-gray-500">
+          Need Help?{" "}
+          <Link
+            to="/home"
+            className="font-semibold text-blue-500 underline decoration-dsahed hover:text-fuchsia-500"
+          >
+            Back to Definitions
+          </Link>
+        </p>
       </div>
     </section>
   );

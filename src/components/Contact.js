@@ -13,7 +13,7 @@ export default function Contact() {
         type="button"
         className="btn-primary font-semibold"
         onClick={handleContact}
-        title="Click to send an email"
+        title="Click to send an email to easygrammar193@gmail.com"
       >
         CONTACT
       </button>

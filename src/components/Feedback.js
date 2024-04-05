@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import fixPic from "../img/fixPic.jpeg";
 
 // Please define the props for this component
 export default function Feedback({ userInput, data }) {
+  // Navigate to the home page if no user input
+  const navigate = useNavigate();
+  if (!userInput) {
+    navigate("/home");
+  }
+  // Scroll to top when the page is loaded
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   // Here for the spell checked text
   const [responseDisplay, setResponseDisplay] = useState([]);
   // Here for the grade from the user text
@@ -133,7 +142,7 @@ export default function Feedback({ userInput, data }) {
           </p>
         </div>
         <div className="mt-8">
-          <h3 className="font-bold text-left text-lg lg:text-xl mb-2">
+          <h3 className="font-bold text-left text-lg lg:text-xl mb-4">
             Feedback
           </h3>
           <div className="rounded-lg border border-gray-300 bg-white shadow-md">
@@ -175,7 +184,10 @@ export default function Feedback({ userInput, data }) {
           </div>
         </div>
         <div className="mt-8">
-          <Link to="/home" className="btn-primary w-24">
+          <Link
+            to="/home"
+            className="btn-primary w-48 h-12 flex items-center justify-center mx-auto"
+          >
             Back to Home
           </Link>
         </div>

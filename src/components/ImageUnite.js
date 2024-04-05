@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import fixPic from "../img/fixPic.jpeg";
 import { Link } from "react-router-dom";
+import { ImSpinner3 } from "react-icons/im";
 
 export default function ImageUnite({ data }) {
   // check if error exists
@@ -10,6 +11,7 @@ export default function ImageUnite({ data }) {
 
   // Initialize state
   const [imageData, setImageData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   // Update state with stored data when word changes
   useEffect(() => {
@@ -64,6 +66,8 @@ export default function ImageUnite({ data }) {
 
   // funtion that will be generated when we click on the button
   const imageGenerator = async () => {
+    // Set loading state to true
+    setIsLoading(true);
     // this mean that if we don't add anything in the input field, it won't return anything
     if (error || !word) {
       return 0;
@@ -111,6 +115,8 @@ export default function ImageUnite({ data }) {
         isGenerated: true,
       });
     }
+    // When the image is generated, set loading state to false
+    setIsLoading(false);
   };
 
   return (
@@ -118,7 +124,7 @@ export default function ImageUnite({ data }) {
       <>
         {/* using a ternary operator if image_url is true we show the default image if false we show the image provided by the OpenAI api */}
         <img src={imageData.image_url || fixPic} alt={word} />
-        {imageData.showGenerate && (
+        {imageData.showGenerate && !isLoading && (
           <>
             <div>
               Create an image of&nbsp;
@@ -133,6 +139,9 @@ export default function ImageUnite({ data }) {
               Generate
             </button>
           </>
+        )}
+        {isLoading && (
+          <ImSpinner3 className="animate-spin h-8 w-8 my-2 text-fuchsia-300" />
         )}
         {imageData.isGenerated && (
           <>
