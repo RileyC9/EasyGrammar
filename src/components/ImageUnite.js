@@ -5,9 +5,9 @@ import { ImSpinner3 } from "react-icons/im";
 
 export default function ImageUnite({ data }) {
   // check if error exists
-  const error = data[0]?.error;
+  const error = data?.[0]?.error;
   // get searched word for alt attribute
-  const word = error ? "" : data[0]?.word;
+  const word = error ? "" : data?.[0]?.word;
 
   // Initialize state
   const [imageData, setImageData] = useState({});
@@ -18,6 +18,18 @@ export default function ImageUnite({ data }) {
     const localData = localStorage.getItem(word);
     if (localData) {
       const localJsonData = JSON.parse(localData);
+      const expirationTime = localJsonData.expirationTime;
+      if (expirationTime && expirationTime < Date.now()) {
+        // Reset image data of the word if it has expired
+        setImageData({
+          word,
+          image_url: "",
+          showGenerate: true,
+          isGenerated: false,
+          expirationTime: undefined,
+        });
+        return;
+      }
       setImageData(localJsonData);
     } else {
       setImageData({
@@ -25,6 +37,7 @@ export default function ImageUnite({ data }) {
         image_url: "",
         showGenerate: true,
         isGenerated: false,
+        expirationTime: undefined,
       });
     }
   }, [word]);
@@ -35,34 +48,6 @@ export default function ImageUnite({ data }) {
       localStorage.setItem(imageData.word, JSON.stringify(imageData));
     }
   }, [imageData]);
-
-  const meanings = [];
-  const examples = [];
-  if (error === undefined) {
-    // Going through the dictionary API to get first one definition
-    data.slice(0, 1).forEach((element) =>
-      element.meanings.forEach((set) => {
-        set.definitions.slice(0, 1).forEach((definition) => {
-          meanings.push(definition.definition);
-        });
-        set.definitions.forEach((definition) => {
-          examples.push(definition.example);
-        });
-      })
-    );
-  }
-  const meaningsStr =
-    meanings.length > 0
-      ? "The word can mean " + meanings.join(", ") + " and so on. "
-      : "";
-  const examplesStr =
-    examples.length > 0
-      ? "In a sentence, it could be used like " +
-        examples.join(", ") +
-        " and so on. "
-      : "";
-  // eslint-disable-next-line
-  const prompt = `Generate an image representing the word '${word}' along with its meanings and potential context. ${meaningsStr}${examplesStr}Create an image that encapsulates the essence of this word in a visually compelling manner.`;
 
   // funtion that will be generated when we click on the button
   const imageGenerator = async () => {
@@ -91,16 +76,6 @@ export default function ImageUnite({ data }) {
         }),
       }
     );
-    // // Fake data for testing
-    // const response = {
-    //   json: async () => ({
-    //     data: [
-    //       {
-    //         url: images,
-    //       },
-    //     ],
-    //   }),
-    // };
 
     // return a promise, the data from the response body is stored in the variable data
     let res = await response.json();
@@ -113,6 +88,7 @@ export default function ImageUnite({ data }) {
         image_url: res_data[0].url,
         showGenerate: false,
         isGenerated: true,
+        expirationTime: Date.now() + 1000 * 60 * 59, // image expires in 1 hour
       });
     }
     // When the image is generated, set loading state to false
