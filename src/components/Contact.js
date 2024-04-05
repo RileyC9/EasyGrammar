@@ -11,7 +11,7 @@ export default function Contact() {
       </p>
       <button
         type="button"
-        className="btn-primary"
+        className="btn-primary font-semibold"
         onClick={handleContact}
         title="Click to send an email"
       >
