@@ -16,10 +16,6 @@ import ImageUnite from "./components/ImageUnite";
 import Feedback from "./components/Feedback";
 import { Route, MemoryRouter, Routes } from "react-router-dom";
 
-// Mock window object
-Object.defineProperty(window, "scrollTo", { value: jest.fn() });
-Object.defineProperty(window, "history", { value: { length: 1 } });
-
 /* SearchInput feature */
 // Unit Test 1
 // test to find if the search button exists in the SearchInput component
