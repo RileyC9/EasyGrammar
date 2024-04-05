@@ -13,7 +13,7 @@ function Landing() {
   useEffect(() => {
     if (hasVisited) {
       navigate("/home");
-    } else {
+    } else if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
     // eslint-disable-next-line
@@ -21,9 +21,13 @@ function Landing() {
 
   const handleSkip = () => {
     localStorage.setItem("hasVisited", "true");
-    const history = window.history;
-    if (history.length > 1) {
-      navigate(-1);
+    if (typeof window !== "undefined") {
+      const history = window.history;
+      if (history.length > 1) {
+        navigate(-1);
+      } else {
+        navigate("/home");
+      }
     } else {
       navigate("/home");
     }

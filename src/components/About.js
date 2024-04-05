@@ -11,7 +11,7 @@ import { FaGithub } from "react-icons/fa";
 export default function About() {
   // Scroll to top when the page is loaded
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
   }, []);
   const teamMembers = [
     {

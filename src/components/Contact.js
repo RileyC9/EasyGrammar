@@ -1,6 +1,12 @@
 export default function Contact() {
   const handleContact = () => {
-    window.open("mailto:easygrammar193@gmail.com");
+    if (typeof window !== "undefined") {
+      window.open("mailto:easygrammar193@gmail.com");
+    } else {
+      console.log(
+        "Please contact us by sending an email to easygrammar193@gmail.com"
+      );
+    }
   };
 
   return (

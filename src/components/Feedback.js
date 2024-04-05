@@ -11,7 +11,7 @@ export default function Feedback({ userInput, data }) {
   }
   // Scroll to top when the page is loaded
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
   }, []);
   // Here for the spell checked text
   const [responseDisplay, setResponseDisplay] = useState([]);
@@ -110,13 +110,10 @@ export default function Feedback({ userInput, data }) {
 
     AIspellCheck();
   }, [userInput]);
-  // let finalDisplay = [];
-  // responseDisplay.forEach
+
   let finalDisplay = responseDisplay.map((sentence) => (
     <li key={index++}>{sentence}</li>
   ));
-  // window.scrollTo(0, 0);
-  //  }, [userInput, responseDisplay]);
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);

@@ -18,7 +18,7 @@ export default function Practice({ onUserInput, data }) {
 
   // Scroll to top when the page is loaded
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
   }, []);
 
   const handleInputChange = (e) => {
