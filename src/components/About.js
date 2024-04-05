@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Contact from "./Contact";
 import Help from "./Help";
@@ -9,6 +9,10 @@ import yujie from "../img/yujie.jpg";
 import { FaGithub } from "react-icons/fa";
 
 export default function About() {
+  // Scroll to top when the page is loaded
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const teamMembers = [
     {
       name: "Ravinesh",
@@ -40,6 +44,7 @@ export default function About() {
       <Help />
       <Link
         to="https://github.com/RileyC9/EasyGrammar"
+        title="https://github.com/RileyC9/EasyGrammar"
         className="btn-primary w-64 h-12 flex items-center justify-center mt-12 mx-auto"
       >
         <FaGithub className="mr-2 h-6 w-6" />
@@ -66,9 +71,10 @@ export default function About() {
                     {member.name}
                     <Link
                       to={member.github}
+                      title={member.github}
                       className="h-7 w-7 ml-2 bg-white hover:bg-fuchsia-300 hover:text-white rounded-full flex justify-center items-center"
                     >
-                      <FaGithub className="h-4 w-4" title="GitHub" />
+                      <FaGithub className="h-4 w-4" />
                     </Link>
                   </h2>
                   <p className="text-gray-500 text-sm">{member.role}</p>
