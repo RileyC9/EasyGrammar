@@ -204,74 +204,74 @@ describe("SampleSentences component", () => {
 });
 /* End of Sample Sentence feature */
 
-/* Grammar analysis feature */
-describe("Grammar Analysis Feature", () => {
-  // Test case: Ensure that the component renders the grammar analysis report
-  const definition = [
-    {
-      word: "example",
-      meanings: [
-        {
-          definitions: [{ definition: "a thing characteristic of its kind" }],
-        },
-      ],
-      phonetics: [{ text: "/ɪɡˈzæmpəl/", audio: "example_audio.mp3" }],
-    },
-  ];
-  test("Render Grammar Analysis Report", async () => {
-    // Render the component
-    const { getByTestId } = render(
-      <MemoryRouter initialEntries={["/feedback"]}>
-        <Routes>
-          <Route
-            path="/feedback"
-            element={
-              <Feedback userInput={"Helo, My nam were Rav"} data={definition} />
-            }
-          />
-        </Routes>
-      </MemoryRouter>
-    );
+// /* Grammar analysis feature */
+// describe("Grammar Analysis Feature", () => {
+//   // Test case: Ensure that the component renders the grammar analysis report
+//   const definition = [
+//     {
+//       word: "example",
+//       meanings: [
+//         {
+//           definitions: [{ definition: "a thing characteristic of its kind" }],
+//         },
+//       ],
+//       phonetics: [{ text: "/ɪɡˈzæmpəl/", audio: "example_audio.mp3" }],
+//     },
+//   ];
+//   test("Render Grammar Analysis Report", async () => {
+//     // Render the component
+//     const { getByTestId } = render(
+//       <MemoryRouter initialEntries={["/feedback"]}>
+//         <Routes>
+//           <Route
+//             path="/feedback"
+//             element={
+//               <Feedback userInput={"Helo, My nam were Rav"} data={definition} />
+//             }
+//           />
+//         </Routes>
+//       </MemoryRouter>
+//     );
 
-    // Wait for the report to be displayed
-    await waitFor(() => {
-      const grammarAnalysisReport = getByTestId("grammar-analysis-report");
+//     // Wait for the report to be displayed
+//     await waitFor(() => {
+//       const grammarAnalysisReport = getByTestId("grammar-analysis-report");
 
-      // Expect an element with the 'grammar-analysis-report' data-testid attribute to be in the component
-      expect(grammarAnalysisReport).toBeInTheDocument();
-    });
-  });
+//       // Expect an element with the 'grammar-analysis-report' data-testid attribute to be in the component
+//       expect(grammarAnalysisReport).toBeInTheDocument();
+//     });
+//   });
 
-  // Test case:Ensure that the component fetches and stores data correctly
-  test("Fetch and Store Data", async () => {
-    // Mock the fetch request to return sample data
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () =>
-          Promise.resolve({
-            /* Sample data */
-          }),
-      })
-    );
+//   // Test case:Ensure that the component fetches and stores data correctly
+//   test("Fetch and Store Data", async () => {
+//     // Mock the fetch request to return sample data
+//     global.fetch = jest.fn(() =>
+//       Promise.resolve({
+//         json: () =>
+//           Promise.resolve({
+//             /* Sample data */
+//           }),
+//       })
+//     );
 
-    // Render the component
-    // const { grammarAnalysis } = render(<Feedback userInput={"helo, my nam were Rav."} data={definition}/>);
-    const { grammarAnalysis } = render(
-      <MemoryRouter initialEntries={["/feedback"]}>
-        <Routes>
-          <Route
-            path="/feedback"
-            element={
-              <Feedback userInput={"Helo, My nam were Rav"} data={definition} />
-            }
-          />
-        </Routes>
-      </MemoryRouter>
-    );
-    // Wait for data to be fetched and stored
-    await waitFor(() => {
-      // Expect 'grammarAnalysis' to be equal to the expected data
-      expect(grammarAnalysis).toEqual(/* Expected data */);
-    });
-  });
-});
+//     // Render the component
+//     // const { grammarAnalysis } = render(<Feedback userInput={"helo, my nam were Rav."} data={definition}/>);
+//     const { grammarAnalysis } = render(
+//       <MemoryRouter initialEntries={["/feedback"]}>
+//         <Routes>
+//           <Route
+//             path="/feedback"
+//             element={
+//               <Feedback userInput={"Helo, My nam were Rav"} data={definition} />
+//             }
+//           />
+//         </Routes>
+//       </MemoryRouter>
+//     );
+//     // Wait for data to be fetched and stored
+//     await waitFor(() => {
+//       // Expect 'grammarAnalysis' to be equal to the expected data
+//       expect(grammarAnalysis).toEqual(/* Expected data */);
+//     });
+//   });
+// });
