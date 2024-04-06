@@ -112,7 +112,7 @@ export default function Feedback({ userInput, data }) {
   }, [userInput]);
 
   let finalDisplay = responseDisplay.map((sentence) => (
-    <li key={index++}>{sentence}</li>
+    <li key={index++} data-testid="grammar-analysis-report">{sentence}</li>
   ));
 
   const toggleOpen = () => {
