@@ -1,7 +1,10 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   const navLinks = [
-    { href: "#", label: "Home" },
-    { href: "#", label: "About" },
+    { href: "/home", label: "Home" },
+    { href: "/about", label: "About" },
     { href: "mailto:easygrammar193@gmail.com", label: "Contact" },
   ];
   return (
@@ -25,11 +28,9 @@ export default function Footer() {
             </span>
             <ul className="flex flex-wrap items-center justify-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
               {navLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="hover:underline me-4 md:me-6">
-                    {link.label}
-                  </a>
-                </li>
+                <Link key={link.label} to={link.href} className="me-4 md:me-6">
+                  <li key={link.label}>{link.label}</li>
+                </Link>
               ))}
             </ul>
           </div>

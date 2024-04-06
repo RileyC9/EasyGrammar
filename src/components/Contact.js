@@ -1,6 +1,12 @@
 export default function Contact() {
   const handleContact = () => {
-    window.open("mailto:easygrammar193@gmail.com");
+    if (typeof window !== "undefined") {
+      window.open("mailto:easygrammar193@gmail.com");
+    } else {
+      console.log(
+        "Please contact us by sending an email to easygrammar193@gmail.com"
+      );
+    }
   };
 
   return (
@@ -9,7 +15,12 @@ export default function Contact() {
       <p className="mb-4 text-gray-500 lg:text-lg dark:text-gray-400">
         Get in touch with us!
       </p>
-      <button type="button" className="btn-primary" onClick={handleContact}>
+      <button
+        type="button"
+        className="btn-primary font-semibold"
+        onClick={handleContact}
+        title="Click to send an email to easygrammar193@gmail.com"
+      >
         CONTACT
       </button>
     </div>
