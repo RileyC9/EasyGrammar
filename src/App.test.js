@@ -15,6 +15,7 @@ import ImageUnite from "./components/ImageUnite";
 // import fixPic from "./components/Image/fixPic.jpeg";
 import Feedback from "./components/Feedback";
 import { Route, MemoryRouter, Routes } from "react-router-dom";
+import '@testing-library/jest-dom/extend-expect';
 
 /* SearchInput feature */
 // Unit Test 1
@@ -243,35 +244,102 @@ describe("SampleSentences component", () => {
 //   });
 
 //   // Test case:Ensure that the component fetches and stores data correctly
-//   test("Fetch and Store Data", async () => {
+//   test('Fetch and Store Data', async () => {
+    
 //     // Mock the fetch request to return sample data
 //     global.fetch = jest.fn(() =>
 //       Promise.resolve({
-//         json: () =>
-//           Promise.resolve({
-//             /* Sample data */
-//           }),
+//         json: () => Promise.resolve({ /* Sample data */ }),
 //       })
 //     );
 
 //     // Render the component
 //     // const { grammarAnalysis } = render(<Feedback userInput={"helo, my nam were Rav."} data={definition}/>);
-//     const { grammarAnalysis } = render(
+//       const { grammarAnalysis } = render(
 //       <MemoryRouter initialEntries={["/feedback"]}>
 //         <Routes>
 //           <Route
 //             path="/feedback"
-//             element={
-//               <Feedback userInput={"Helo, My nam were Rav"} data={definition} />
-//             }
+//             element={<Feedback userInput={"Helo, My nam were Rav"} data={definition} />}
 //           />
 //         </Routes>
-//       </MemoryRouter>
-//     );
+//       </MemoryRouter>)
 //     // Wait for data to be fetched and stored
 //     await waitFor(() => {
+
 //       // Expect 'grammarAnalysis' to be equal to the expected data
 //       expect(grammarAnalysis).toEqual(/* Expected data */);
 //     });
 //   });
 // });
+
+// Mock the useContext hook
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  // Mock the useContext hook to return a default value
+  useContext: () => ({
+    basename: '/',
+  }),
+}));
+
+describe('Feedback component', () => {
+  test('renders the description evaluation report correctly', async () => {
+    // Mock data for description evaluation
+    const userInput = 'This is a test input';
+    const data = [{ error: null, word: 'test' }];
+
+    // Render the component with mock data inside MemoryRouter
+    const { getByText } = render(
+      <MemoryRouter>
+        <Feedback userInput={userInput} data={data} />
+      </MemoryRouter>
+    );
+
+    // Wait for the feedback to be rendered
+    await waitFor(() => {
+      // Check if the score is rendered
+      expect(getByText('Your Score:')).toBeInTheDocument();
+
+      // Check if the example answer is rendered
+      expect(getByText('Your Answer:')).toBeInTheDocument();
+    });
+  });
+
+  test('fetches and stores data in the evaluation variable', async () => {
+    // Mock data to be fetched
+    const userInput = 'This is a test input';
+    const data = [{ error: null, word: 'test' }];
+
+    // Mock the fetch function
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            choices: [
+              {
+                message: {
+                  content: `Corrected text: in this text:${userInput}`,
+                },
+              },
+            ],
+          }),
+      })
+    );
+
+    // Render the component inside MemoryRouter
+    const { getByText } = render(
+      <MemoryRouter>
+        <Feedback userInput={userInput} data={data} />
+      </MemoryRouter>
+    );
+
+    // Wait for data to be fetched and stored
+    await waitFor(() => {
+      // Check if the grade is rendered
+      expect(getByText(/Your Score:/)).toBeInTheDocument();
+
+      // Check if the explanation is rendered
+      expect(getByText('How to improve?')).toBeInTheDocument();
+    });
+  });
+});
