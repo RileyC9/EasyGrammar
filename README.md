@@ -53,7 +53,6 @@ Our objective is to create a website having the ability to help people who want 
 | Yujie Peng       | [AI Declaration 1](./AIDeclarationForms/p1_AI_Declaration_Yujie_Peng_100407970.pdf)     | [AI Declaration 2](./AIDeclarationForms/p2_AI_Declaration_Yujie_Peng_100407970.pdf) |
 | Ravinesh Sami    | [AI Declaration 1](./AIDeclarationForms/p1_AI_Declaration_Ravinesh_Sami_100399749.pdf)  |                                                                                     |
 | Xavier Pardanaud | [AI Declaration 1](AIDeclarationForms/P1_AI_Declaration_Xavier_Pardanaud_100309633.pdf) |                                                                                     |
-|                  |                                                                                         |                                                                                     |
 
 ## 💻 How to start our React website locally
 
@@ -61,7 +60,7 @@ All modern browsers should be able to support react website, expect Internet Exp
 
 ### 0. Before you start
 
-- If you have not install [Node.js](https://nodejs.org/en/) on your machine. You can visit [freeCodeCamp](https://www.freecodecamp.org/news/how-to-install-react-a-step-by-step-guide/) and follow Step 1.
+- If you have not installed [Node.js](https://nodejs.org/en/) on your machine. You can visit [freeCodeCamp](https://www.freecodecamp.org/news/how-to-install-react-a-step-by-step-guide/) and follow Step 1.
 - You may need to install [npm](https://www.npmjs.com/get-npm) to install all the dependencies.
 - You may need to install [Git](https://github.com/git-guides/install-git) to clone this repo to your local machine.
 - Use your own [OpenAI API key](https://platform.openai.com/docs/overview) to run the project locally.
