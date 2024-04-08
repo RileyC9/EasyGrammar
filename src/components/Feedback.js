@@ -139,7 +139,7 @@ export default function Feedback({ userInput, data }) {
           </p>
         </div>
         <div className="mt-8">
-          <h3 className="font-bold text-left text-lg lg:text-xl mb-4">
+          <h3 data-testid="grammar-analysis-report"className="font-bold text-left text-lg lg:text-xl mb-4">
             Feedback
           </h3>
           <div className="rounded-lg border border-gray-300 bg-white shadow-md">
@@ -153,7 +153,7 @@ export default function Feedback({ userInput, data }) {
                 onClick={() => toggleOpen()}
                 className="flex items-center justify-between w-full p-4 rtl:text-right border-t border-gray-300"
               >
-                <span className="font-semibold">How to improve?</span>
+                <span data-testid="how-to-improve"className="font-semibold">How to improve?</span>
                 <svg
                   className={`w-3 h-3 shrink-0 ${isOpen ? "" : "rotate-180"}`}
                   xmlns="http://www.w3.org/2000/svg"
