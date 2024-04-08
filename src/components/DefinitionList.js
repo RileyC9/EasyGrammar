@@ -21,6 +21,8 @@ const DefinitionList = ({ definition, display, children }) => {
   };
 
   // Store the definition and phonetic if no error into their array respectively. Will not run if there is an error on the fetched data
+  //  DIctionary API documentation: https://dictionaryapi.dev/
+  // https://github.com/meetDeveloper/freeDictionaryAPI
   if (error === undefined) {
     // Going through the fetched data (definition) to get only one set of definition
     definition.slice(0, 1).forEach((element) =>
