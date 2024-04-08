@@ -22,7 +22,7 @@ import '@testing-library/jest-dom/extend-expect';
 /* SearchInput feature */
 // Unit Test 1
 // test to find if the search button exists in the SearchInput component
-describe("Search Input component", () => {
+describe("[Unit Test]Search Input component", () => {
   test("renders a search button", () => {
     render(<SearchInput />);
 
@@ -49,7 +49,7 @@ describe("Search Input component", () => {
 
 /* Definition List feature */
 // unit test for Renders definition list if there is no error
-describe("DefinitionList component", () => {
+describe("[Unit Test]DefinitionList component", () => {
   // Test case: mock data
   test("renders definition list if there is no error", () => {
     // Mock data for a successful fetch response
@@ -104,7 +104,7 @@ describe("DefinitionList component", () => {
 
 /* Audio Phoenetic feature */
 // Test case: testing audio button feature
-describe("Audio component", () => {
+describe("[Unit Test]Audio component", () => {
   test("renders audio button if there is an audio link", () => {
     // Render the DefinitionList component with a sample definition containing an audio link
     render(
@@ -160,7 +160,7 @@ describe("Audio component", () => {
 });
 
 /*SampleSentence feature */
-describe("SampleSentences component", () => {
+describe("[Unit Test]SampleSentences component", () => {
   // Test case: check if the Sample sentence component renders correctly with fetched data
   test("renders correctly with fetched data", () => {
     //Sample data with fetched data containing a sample sentence
@@ -210,7 +210,7 @@ describe("SampleSentences component", () => {
 /* End of Sample Sentence feature */
 
 // /* Grammar analysis feature */
-describe('Grammar Analysis Feature', () => {
+describe('[Unit Test]Grammar Analysis Feature', () => {
   // Test case: Ensure that the component renders the grammar analysis report
   const definition = [
     {
@@ -269,13 +269,16 @@ describe('Grammar Analysis Feature', () => {
     await waitFor(() => getByTestId('how-to-improve'));
 
     // Click on the toggle button to display the improvement explanation
-    userEvent.click(getByTestId('how-to-improve'));
+    const toggleButton = getByTestId('how-to-improve');
+    
+    const isOpenAfterClick = toggleButton.getAttribute('aria-expanded') === 'false';
+    expect (isOpenAfterClick).toBe(false);
   });
 });
 /*End of Grammar Analysis feature*/
 
 /*Feedback feature*/
-describe('Feedback component', () => {
+describe('[Unit Test]Feedback component', () => {
   test('renders the description evaluation report correctly', async () => {
     // Mock data for description evaluation
     const userInput = 'This is a test input';
@@ -339,7 +342,7 @@ describe('Feedback component', () => {
 /*End of Grammar Analysis feature*/
 
 /*Image Generation feature*/
-describe('Image generation feature', () => {
+describe('[Unit Test]Image generation feature', () => {
   test('renders generate button', () => {
     // Render the component
     const { getByText } = render(<ImageUnite data={[]} />); // Passing empty array for data prop
