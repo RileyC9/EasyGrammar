@@ -6,6 +6,8 @@ import {
   waitFor,
   getByText,
   fireEvent,
+  getByAltText,
+  queryByText
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SearchInput from "./components/SearchInput";
@@ -20,32 +22,34 @@ import '@testing-library/jest-dom/extend-expect';
 /* SearchInput feature */
 // Unit Test 1
 // test to find if the search button exists in the SearchInput component
-test("renders a search button", () => {
-  render(<SearchInput />);
+describe("[Unit Test]Search Input component", () => {
+  test("renders a search button", () => {
+    render(<SearchInput />);
 
-  // Use React Testing Library's queryByText to find the search button
-  const searchButton = screen.queryByRole("button", { name: /Search/i });
+    // Use React Testing Library's queryByText to find the search button
+    const searchButton = screen.queryByRole("button", { name: /Search/i });
 
-  // Assert that the search button exists
-  expect(searchButton).toBeInTheDocument();
-});
+    // Assert that the search button exists
+    expect(searchButton).toBeInTheDocument();
+  });
 
-// unit test 2
-// test to find if the text input field exists in the SearchInput component
-test("renders a search input field", () => {
-  render(<SearchInput />);
+  // unit test 2
+  // test to find if the text input field exists in the SearchInput component
+  test("renders a search input field", () => {
+    render(<SearchInput />);
 
-  // Use getByPlaceholderText to find the search input field by its placeholder text
-  const searchInput = screen.getByPlaceholderText(/Type to search a word/i);
+    // Use getByPlaceholderText to find the search input field by its placeholder text
+    const searchInput = screen.getByPlaceholderText(/Type to search a word/i);
 
-  // Assert that the search input field exists
-  expect(searchInput).toBeInTheDocument();
+    // Assert that the search input field exists
+    expect(searchInput).toBeInTheDocument();
+  });
 });
 /* End of Search input testes */
 
 /* Definition List feature */
 // unit test for Renders definition list if there is no error
-describe("DefinitionList component", () => {
+describe("[Unit Test]DefinitionList component", () => {
   // Test case: mock data
   test("renders definition list if there is no error", () => {
     // Mock data for a successful fetch response
@@ -100,7 +104,7 @@ describe("DefinitionList component", () => {
 
 /* Audio Phoenetic feature */
 // Test case: testing audio button feature
-describe("Audio component", () => {
+describe("[Unit Test]Audio component", () => {
   test("renders audio button if there is an audio link", () => {
     // Render the DefinitionList component with a sample definition containing an audio link
     render(
@@ -156,7 +160,7 @@ describe("Audio component", () => {
 });
 
 /*SampleSentence feature */
-describe("SampleSentences component", () => {
+describe("[Unit Test]SampleSentences component", () => {
   // Test case: check if the Sample sentence component renders correctly with fetched data
   test("renders correctly with fetched data", () => {
     //Sample data with fetched data containing a sample sentence
@@ -206,83 +210,75 @@ describe("SampleSentences component", () => {
 /* End of Sample Sentence feature */
 
 // /* Grammar analysis feature */
-// describe("Grammar Analysis Feature", () => {
-//   // Test case: Ensure that the component renders the grammar analysis report
-//   const definition = [
-//     {
-//       word: "example",
-//       meanings: [
-//         {
-//           definitions: [{ definition: "a thing characteristic of its kind" }],
-//         },
-//       ],
-//       phonetics: [{ text: "/ɪɡˈzæmpəl/", audio: "example_audio.mp3" }],
-//     },
-//   ];
-//   test("Render Grammar Analysis Report", async () => {
-//     // Render the component
-//     const { getByTestId } = render(
-//       <MemoryRouter initialEntries={["/feedback"]}>
-//         <Routes>
-//           <Route
-//             path="/feedback"
-//             element={
-//               <Feedback userInput={"Helo, My nam were Rav"} data={definition} />
-//             }
-//           />
-//         </Routes>
-//       </MemoryRouter>
-//     );
+describe('[Unit Test]Grammar Analysis Feature', () => {
+  // Test case: Ensure that the component renders the grammar analysis report
+  const definition = [
+    {
+      word: "example",
+      meanings: [
+        {
+          definitions: [{ definition: "a thing characteristic of its kind" }],
+        },
+      ],
+      phonetics: [{ text: "/ɪɡˈzæmpəl/", audio: "example_audio.mp3" }],
+    },
+  ];
+  test("Render Grammar Analysis Report", async () => {
+    // Render the component
+    const { getByTestId } = render(
+      <MemoryRouter initialEntries={["/feedback"]}>
+        <Routes>
+          <Route
+            path="/feedback"
+            element={<Feedback userInput={"Helo, My nam were Rav"} data={definition} />}
+          />
+        </Routes>
+      </MemoryRouter>);
 
-//     // Wait for the report to be displayed
-//     await waitFor(() => {
-//       const grammarAnalysisReport = getByTestId("grammar-analysis-report");
+    // Wait for the report to be displayed
+    await waitFor(() => {
 
-//       // Expect an element with the 'grammar-analysis-report' data-testid attribute to be in the component
-//       expect(grammarAnalysisReport).toBeInTheDocument();
-//     });
-//   });
+      const grammarAnalysisReport = getByTestId('grammar-analysis-report');
 
-//   // Test case:Ensure that the component fetches and stores data correctly
-//   test('Fetch and Store Data', async () => {
+
+      // Expect an element with the 'grammar-analysis-report' data-testid attribute to be in the component
+      expect(grammarAnalysisReport).toBeInTheDocument();
+    });
+  });
+
+  // Mock useNavigate hook
+  jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => jest.fn(), // Mock useNavigate to return a jest.fn()
+  }));
+
+  test('displays how to improve when toggle is clicked', async () => {
+    // Mock user input and data
+    const userInput = "This is a test sentence.";
+    const data = [
+      { error: false, word: "test" }
+    ];
+    // Render the Feedback component with mock data
+    const { getByTestId } = render(
+      <MemoryRouter>
+        <Feedback userInput={userInput} data={data} />
+      </MemoryRouter>
+    );
+
+    // Wait for the component to finish fetching and displaying the improvement explanation
+    await waitFor(() => getByTestId('how-to-improve'));
+
+    // Click on the toggle button to display the improvement explanation
+    const toggleButton = getByTestId('how-to-improve');
     
-//     // Mock the fetch request to return sample data
-//     global.fetch = jest.fn(() =>
-//       Promise.resolve({
-//         json: () => Promise.resolve({ /* Sample data */ }),
-//       })
-//     );
+    const isOpenAfterClick = toggleButton.getAttribute('aria-expanded') === 'false';
+    expect (isOpenAfterClick).toBe(false);
+  });
+});
+/*End of Grammar Analysis feature*/
 
-//     // Render the component
-//     // const { grammarAnalysis } = render(<Feedback userInput={"helo, my nam were Rav."} data={definition}/>);
-//       const { grammarAnalysis } = render(
-//       <MemoryRouter initialEntries={["/feedback"]}>
-//         <Routes>
-//           <Route
-//             path="/feedback"
-//             element={<Feedback userInput={"Helo, My nam were Rav"} data={definition} />}
-//           />
-//         </Routes>
-//       </MemoryRouter>)
-//     // Wait for data to be fetched and stored
-//     await waitFor(() => {
-
-//       // Expect 'grammarAnalysis' to be equal to the expected data
-//       expect(grammarAnalysis).toEqual(/* Expected data */);
-//     });
-//   });
-// });
-
-// Mock the useContext hook
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  // Mock the useContext hook to return a default value
-  useContext: () => ({
-    basename: '/',
-  }),
-}));
-
-describe('Feedback component', () => {
+/*Feedback feature*/
+describe('[Unit Test]Feedback component', () => {
   test('renders the description evaluation report correctly', async () => {
     // Mock data for description evaluation
     const userInput = 'This is a test input';
@@ -343,3 +339,42 @@ describe('Feedback component', () => {
     });
   });
 });
+/*End of Grammar Analysis feature*/
+
+/*Image Generation feature*/
+describe('[Unit Test]Image generation feature', () => {
+  test('renders generate button', () => {
+    // Render the component
+    const { getByText } = render(<ImageUnite data={[]} />); // Passing empty array for data prop
+
+    // Check if the generate button is present
+    const generateButton = getByText('Generate');
+    expect(generateButton).toBeInTheDocument();
+  });
+
+
+  //global.localStorage.getItem = jest.fn(() => null);
+
+  test('renders "Create an image of [word]" when imageData.showGenerate is true and isLoading is false', () => {
+    // Mocking data
+    const imageData = {
+      word: 'example',
+      image_url: '',
+      showGenerate: true,
+      isGenerated: false,
+      expirationTime: undefined,
+    };
+
+    // Render the component with the mock data
+    render(<ImageUnite data={[imageData]} />);
+
+    // Check if the text "Create an image of [word]" is displayed
+    const createImageText = screen.getByTestId('create-image-text');
+    expect(createImageText).toBeInTheDocument();
+
+    // Check if the "Generate" button is present
+    const generateButton = screen.getByText('Generate');
+    expect(generateButton).toBeInTheDocument();
+  });
+});
+/*End of Image Generation feature*/
