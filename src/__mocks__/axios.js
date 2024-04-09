@@ -17,7 +17,8 @@ export default {
               {
                 "definition": "The act of innovating; the introduction of something new, in customs, rites, etc.",
                 "synonyms": [],
-                "antonyms": []
+                "antonyms": [],
+                "example": "This is a sample sentence" 
               }
             ]
           }
