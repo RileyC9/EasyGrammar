@@ -51,7 +51,7 @@ Our objective is to create a website having the ability to help people who want 
 | ---------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | TingHin Cheung   | [AI Declaration 1](./AIDeclarationForms/p1_AI_declaration_TingHin_Cheung_100396747.pdf) | [AI Declaration 2](./AIDeclarationForms/P2_AI_Declaration_TingHin_Cheung_100396747.pdf)|
 | Yujie Peng       | [AI Declaration 1](./AIDeclarationForms/p1_AI_Declaration_Yujie_Peng_100407970.pdf)     | [AI Declaration 2](./AIDeclarationForms/p2_AI_Declaration_Yujie_Peng_100407970.pdf) |
-| Ravinesh Sami    | [AI Declaration 1](./AIDeclarationForms/p1_AI_Declaration_Ravinesh_Sami_100399749.pdf)  |                                                                                     |
+| Ravinesh Sami    | [AI Declaration 1](./AIDeclarationForms/p1_AI_Declaration_Ravinesh_Sami_100399749.pdf)  |  [AI Declaration 2](./AIDeclarationForms/P2_AI_Declaration_Ravinesh_Sami_100399749.pdf)                                                                                   |
 | Xavier Pardanaud | [AI Declaration 1](AIDeclarationForms/P1_AI_Declaration_Xavier_Pardanaud_100309633.pdf) | [AI Declaration 2](AIDeclarationForms/P2_AI_Declaration_Xavier_Pardanaud_100309633.pdf)|
 
 ## 💻 How to start our React website locally
