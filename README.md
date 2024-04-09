@@ -6,7 +6,7 @@ Our project aims to develop an application that will assist users in improving t
 
 <!--  The README should also include a link to the public URL, project demo, reports, presentations and any other relevant information. -->
 
-[**Visit the Website**](https://easygrammar.netlify.app/) | [**Project Demo Video**](https://drive.google.com/file/d/1BGwYyWy6-Ay4LPMKNaLGZ9Xeqsm9he0E/view?usp=drive_link) | [**Project Report**]()
+[**Visit the Website**](https://easygrammar.netlify.app/) | [**Project Demo Video**](https://drive.google.com/file/d/1BGwYyWy6-Ay4LPMKNaLGZ9Xeqsm9he0E/view?usp=drive_link) | [**Project Report**](https://docs.google.com/document/d/1XhQ-kXFoNVW9rrmTBhKYQwvTLdIz18xYKvOCXiW-q-A/edit?usp=sharing)
 
 ---
 
