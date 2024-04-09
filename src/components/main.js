@@ -45,22 +45,20 @@ function Main() {
   const wordSubmit = async (e) => {
     e.preventDefault();
     console.log(word);
-    await axios
-      .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
-      .then((res) => {
-        setFetchData(res.data);
-        setDefinitionListDisplay(true);
-      })
-      .catch((error) => {
-        // Display a customized message on console
-        console.error(
-          "Error fetching from the word: " + word + ".\n Error: ",
-          error
-        );
-        // set error message if word not found
-        setFetchData([{ error: "Word not found" }]);
-        setDefinitionListDisplay(true);
-      });
+    try {
+      const response = await axios.get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word);
+      setFetchData(response.data);
+      setDefinitionListDisplay(true);
+    } catch (error) {
+      // Display a customized message on console
+      console.error(
+        "Error fetching from the word: " + word + ".\n Error: ",
+        error
+      );
+      // set error message if word not found
+      setFetchData([{ error: "Word not found" }]);
+      setDefinitionListDisplay(true);
+    }
   };
   // re-render the page when word definition is updated
   useEffect(() => {

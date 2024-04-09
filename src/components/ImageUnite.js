@@ -102,8 +102,8 @@ export default function ImageUnite({ data }) {
         <img src={imageData.image_url || fixPic} alt={word} />
         {imageData.showGenerate && !isLoading && (
           <>
-            <div>
-              Create an image of&nbsp;
+            <div data-testid="create-image-text">
+               Create an image of&nbsp;
               <code>{word}</code>
             </div>
             <button
